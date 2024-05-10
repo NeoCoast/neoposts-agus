@@ -1,0 +1,12 @@
+detectors:
+  IrresponsibleModule:
+    enabled: false
+  InstanceVariableAssumption:
+    enabled: false
+  FeatureEnvy:
+    enabled: false
+  UncommunicativeModuleName:
+    enabled: false
+
+exclude_paths:
+  - "./db/migrate/*"
