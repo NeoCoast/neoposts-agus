@@ -51,13 +51,7 @@ gem 'haml-rails', '~> 2.1'
 # Annotates Rails/ActiveRecord Models, routes, fixtures, and others based on the database schema.
 gem 'annotate', '~> 3.2'
 
-gem 'rubocop', '~> 1.63', require: false
-
-gem 'rails_best_practices', require: false
-
-gem 'reek', require: false
-
-gem 'lefthook', require: false
+gem 'html2haml'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -65,7 +59,11 @@ group :development, :test do
   gem 'debug', platforms: %i[mri windows]
   gem 'factory_bot_rails'
   gem 'faker'
+  gem 'lefthook', require: false
+  gem 'rails_best_practices', require: false
+  gem 'reek', require: false
   gem 'rspec-rails', '~> 6.1.0'
+  gem 'rubocop', '~> 1.63', require: false
   gem 'shoulda-matchers', '~> 6.0'
 end
 
