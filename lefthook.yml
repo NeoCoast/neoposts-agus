@@ -1,0 +1,10 @@
+pre-commit:
+  commands:
+    rubocop:
+      run: bundle exec rubocop --force-exclusion {all_files}
+    rails_best_practices:
+      run: bundle exec rails_best_practices
+    reek:
+      run: bundle exec reek
+    test:
+      run: bundle exec rspec spec
