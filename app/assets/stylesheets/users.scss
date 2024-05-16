@@ -1,0 +1,56 @@
+$color-error:rgb(196, 20, 20);
+$color-buttons: #3e6c9b;
+$color-buttons-secondary: #ededed;
+$font: Verdana, sans-serif;
+
+.flex-container {
+    font-family: $font;
+    margin: 5vh 1vw;
+    display: flex;
+    flex-flow: wrap column;
+    align-content: center;
+
+    .title {
+        #display: flex;
+        #justify-content: center;
+    }
+
+    .reg-form{
+        width: 45%;
+        max-width: 350px;
+
+        .field {
+            margin-top: 10px;
+        }
+
+        .input  {
+            width: 100%;
+            ::placeholder {
+                color: #6c757d;
+            }
+        }
+
+        .error-message {
+            margin: 0px;
+            color: $color-error;
+        }
+
+        .actions {
+            margin-top: 10px;
+        }
+    
+        .button-sign-up {
+            margin-top: 10px;
+            background-color: $color-buttons;
+            width: 100%;
+        }
+    
+        .button-log-in {
+            margin-top: 10px;
+            color: black;
+            background-color: $color-buttons-secondary;
+            border-color: black;
+            width: 100%;
+        }
+    }
+}

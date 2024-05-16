@@ -1,0 +1,10 @@
+.flex-container
+  %h2{class: 'title'} Log in
+  = form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'reg-form' }) do |f|
+    .field
+      = f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control input', placeholder: 'Email'
+    .field
+      = f.password_field :password, autocomplete: "current-password", class: 'form-control input', placeholder: 'Password'
+    .actions
+      = f.submit "Log in", class: 'btn btn-primary button-log-in'
+    = render "devise/shared/links"
