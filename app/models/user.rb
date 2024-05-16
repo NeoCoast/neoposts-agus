@@ -7,5 +7,16 @@ class User < ApplicationRecord
   validates :encrypted_password, :nickname, :first_name, :last_name, presence: true
   validates :nickname, uniqueness: { case_sensitive: false }
 
+  has_many :posts
+
   has_one_attached :profile_picture
+  validate :validate_image_type
+
+  private
+
+  def validate_image_type
+    return unless profile_picture.attached? && !image.content_type.in?(['image/png', 'image/jpeg'])
+
+    errors.add(:image, 'Must be a PNG or a JPG file')
+  end
 end
