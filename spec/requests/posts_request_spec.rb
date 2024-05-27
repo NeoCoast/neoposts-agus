@@ -106,4 +106,39 @@ RSpec.describe 'Posts', type: :request do
       end
     end
   end
+
+  describe 'GET /index' do
+    context 'when the user is not logged in' do
+      before { get posts_path }
+
+      it { should redirect_to(new_user_session_path) }
+    end
+
+    context 'when the user is logged in' do
+      let(:post1) { create(:post) }
+      let(:post2) { create(:post) }
+
+      before do
+        sign_in post1.user
+        post2
+        get posts_path
+      end
+
+      it 'renders a successful response' do
+        expect(response).to be_successful
+      end
+
+      it 'returns all posts' do
+        expect(response.body).to include(CGI.escapeHTML(post1.title))
+        expect(response.body).to include(CGI.escapeHTML(post2.title))
+      end
+
+      it 'returns posts ordered by newest' do
+        posts = controller.instance_variable_get('@posts')
+        expect(posts.size).to eq(2)
+        expect(posts.first.title).to eq(post2.title) # newest first
+        expect(posts.second.title).to eq(post1.title)
+      end
+    end
+  end
 end
