@@ -10,6 +10,8 @@ class Post < ApplicationRecord
   has_one_attached :image
   validate :validate_image_type
 
+  scope :ordered_by_newest, -> { order(published_at: :desc) }
+
   private
 
   def validate_image_type
