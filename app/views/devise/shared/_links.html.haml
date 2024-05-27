@@ -1,9 +1,8 @@
 - if controller_name != 'sessions'
-  %br/
-  = link_to "Log in", new_session_path(resource_name), class: 'btn btn-primary button-log-in'
+  = link_to "Log in", new_session_path(resource_name), class: 'button gray-button'
   %br/
 - if devise_mapping.registerable? && controller_name != 'registrations'
-  = link_to "Sign up", new_registration_path(resource_name), class: 'btn btn-primary button-sign-up'
+  = link_to "Sign up", new_registration_path(resource_name), class: 'button blue-button'
   %br/
 - if devise_mapping.confirmable? && controller_name != 'confirmations'
   = link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name)

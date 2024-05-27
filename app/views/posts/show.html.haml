@@ -1,0 +1,22 @@
+.background
+  .user
+    = render "layouts/user_profile"
+  .post
+    .box#post-box
+      %ul
+        %li#back
+          = link_to "Back", :back
+        %li#show-post
+          - if current_user.profile_picture.attached?
+            = image_tag (@post.user.profile_picture), alt: 'profile picture', class: 'profile-picture'
+          - else
+            = image_tag "no_profile_picture", alt: 'no profile picture', class: 'profile-picture'
+          .content
+            .p
+              %span.name #{@post.user.first_name} #{@post.user.last_name}
+            .p.account @#{@post.user.nickname}
+            %h4 #{@post.title}
+            .p #{@post.body}
+            .image
+              - if @post.image.attached?
+                = image_tag (@post.image), alt: 'post image', class: 'post-image'
