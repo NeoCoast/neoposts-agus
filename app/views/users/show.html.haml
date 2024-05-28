@@ -1,0 +1,29 @@
+.background
+  .user
+    = render "layouts/user_profile"
+  .post
+    .box#post-box
+      %ul
+        %li#back
+          = link_to "Back", :back
+        %li#personal_info
+          - if @user.profile_picture.attached?
+            = image_tag (@user.profile_picture), alt: 'profile picture', class: 'profile-picture'
+          - else
+            = image_tag "no_profile_picture", alt: 'no profile picture', class: 'profile-picture'
+          .content
+            .name
+              %span.name #{@user.first_name} #{@user.last_name}
+              %span.account @#{@user.nickname}
+            .dates
+              .blue-box
+              %span Born #{@user.birthday.strftime('%m/%d/%Y')}
+              .blue-box
+              %span Joined #{@user.created_at.strftime('%m/%d/%Y')}
+        %li#account_info
+          %div
+            %p.number #{@user.posts.count.to_s}
+            %p Posts
+          %div
+          %div
+        = render partial: "posts/post", collection: @posts, as: :post
