@@ -115,12 +115,10 @@ RSpec.describe 'Posts', type: :request do
     end
 
     context 'when the user is logged in' do
-      let(:post1) { create(:post) }
-      let(:post2) { create(:post) }
+      let!(:created_posts) { create_list(:post, 2) }
 
       before do
-        sign_in post1.user
-        post2
+        sign_in created_posts[0].user
         get posts_path
       end
 
@@ -129,15 +127,22 @@ RSpec.describe 'Posts', type: :request do
       end
 
       it 'returns all posts' do
-        expect(response.body).to include(CGI.escapeHTML(post1.title))
-        expect(response.body).to include(CGI.escapeHTML(post2.title))
+        posts = controller.instance_variable_get('@posts')
+        expect(posts.size).to eq(2)
+      end
+
+      it 'includes post 1' do
+        expect(response.body).to include(CGI.escapeHTML(created_posts[0].title))
+      end
+
+      it 'includes post 2' do
+        expect(response.body).to include(CGI.escapeHTML(created_posts[1].title))
       end
 
       it 'returns posts ordered by newest' do
         posts = controller.instance_variable_get('@posts')
-        expect(posts.size).to eq(2)
-        expect(posts.first.title).to eq(post2.title) # newest first
-        expect(posts.second.title).to eq(post1.title)
+        expect(posts.first.title).to eq(created_posts[1].title) # newest first
+        expect(posts.second.title).to eq(created_posts[0].title)
       end
     end
   end
