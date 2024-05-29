@@ -25,5 +25,9 @@
             %p.number #{@user.posts.count.to_s}
             %p Posts
           %div
+            %p.number 0
+            %p Following
           %div
+            %p.number 0
+            %p Followers
         = render partial: "posts/post", collection: @posts, as: :post
