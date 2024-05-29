@@ -1,18 +1,19 @@
 .box#user-box
-  %ul
-    %li#user
-      - if current_user.profile_picture.attached?
-        = image_tag (current_user.profile_picture), alt: 'profile picture', class: 'profile-picture'
-      - else
-        = image_tag "no_profile_picture", alt: 'no profile picture', class: 'profile-picture'
-      .p.name
-        #{current_user.first_name} #{current_user.last_name}
-      .p
-        @#{current_user.nickname}
-      = link_to "New Post", new_post_path, class: 'button blue-button'
-    %li#info
-      .p Posts: #{current_user.posts.count}
-      .p Following:
-      .p Followers:
-    %li#sign-out
-      = button_to "Sign out", destroy_user_session_path, method: :delete
+  %a{href: user_path(current_user.nickname), id: 'profile'}
+    %ul
+      %li#user
+        - if current_user.profile_picture.attached?
+          = image_tag (current_user.profile_picture), alt: 'profile picture', class: 'profile-picture'
+        - else
+          = image_tag "no_profile_picture", alt: 'no profile picture', class: 'profile-picture'
+        .p.name
+          #{current_user.first_name} #{current_user.last_name}
+        .p
+          @#{current_user.nickname}
+        = link_to "New Post", new_post_path, class: 'button blue-button'
+      %li#info
+        .p Posts: #{current_user.posts.count}
+        .p Following:
+        .p Followers:
+      %li#sign-out
+        = button_to "Sign out", destroy_user_session_path, method: :delete
