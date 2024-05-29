@@ -10,7 +10,7 @@
           - if @user.profile_picture.attached?
             = image_tag (@user.profile_picture), alt: 'profile picture', class: 'profile-picture'
           - else
-            = image_tag "no_profile_picture", alt: 'no profile picture', class: 'profile-picture'
+            = image_tag "no_profile_picture.png", alt: 'no profile picture', class: 'profile-picture'
           .content
             .name
               %span.name #{@user.first_name} #{@user.last_name}
