@@ -18,6 +18,8 @@
         = f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control', placeholder: 'Password confirmation'
         - if resource.errors.has_key?(:encrypted_password)
           %p.error-message= resource.errors.full_messages_for(:encrypted_password).join(",")
+        - if resource.errors.has_key?(:password_confirmation)
+          %p.error-message= resource.errors.full_messages_for(:password_confirmation).first
       .field
         = f.text_field :nickname, autocomplete: "nickname", class: 'form-control', placeholder: 'Nickname'
         - if resource.errors.has_key?(:nickname)

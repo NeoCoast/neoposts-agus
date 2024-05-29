@@ -3,7 +3,7 @@
     - if post.user.profile_picture.attached?
       = image_tag (post.user.profile_picture), alt: 'profile picture', class: 'profile-picture'
     - else
-      = image_tag "no_profile_picture", alt: 'no profile picture', class: 'profile-picture'
+      = image_tag "no_profile_picture.png", alt: 'no profile picture', class: 'profile-picture'
     .content
       .p
         %span.name #{post.user.first_name} #{post.user.last_name}
