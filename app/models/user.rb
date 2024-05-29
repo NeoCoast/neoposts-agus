@@ -15,7 +15,7 @@ class User < ApplicationRecord
   private
 
   def validate_image_type
-    return unless profile_picture.attached? && !image.content_type.in?(['image/png', 'image/jpeg'])
+    return unless profile_picture.attached? && !profile_picture.content_type.in?(['image/png', 'image/jpeg'])
 
     errors.add(:image, 'Must be a PNG or a JPG file')
   end

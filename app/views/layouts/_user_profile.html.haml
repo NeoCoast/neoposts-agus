@@ -13,7 +13,7 @@
         = link_to "New Post", new_post_path, class: 'button blue-button'
       %li#info
         .p Posts: #{current_user.posts.count}
-        .p Following:
-        .p Followers:
+        .p Following: 0
+        .p Followers: 0
       %li#sign-out
         = button_to "Sign out", destroy_user_session_path, method: :delete
