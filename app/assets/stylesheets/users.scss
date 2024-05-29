@@ -1,49 +1,62 @@
-.sign-container {
-    font-family: $font;
-    font-size: large;
-    margin: 5vh 1vw;
-    display: flex;
-    flex-flow: wrap column;
-    align-content: center;
+.background-sign {
+    background-color: $color-blue-1;
+    height: 100%;
+    min-height: 100vh;
+    
+    .sign-container {
+        font-family: $font;
+        font-size: large;
+        padding: 5vh 1vw;
+        display: flex;
+        flex-flow: wrap column;
+        align-content: center;
 
-    .reg-form{
-        width: 45%;
-        max-width: 350px;
+        .reg-form{
+            width: 45%;
+            max-width: 350px;
 
-        .field {
-            margin-top: 10px;
-        }
-
-        .input  {
-            width: 100%;
-            ::placeholder {
-                color: #6c757d;
-            }
-            font-size: large;
-        }
-
-        input[type="file"] {
-            display: none;
-        }
-
-        .error-message {
-            margin: 0px;
-            color: $color-error;
-        }
-
-        .actions {
-            margin-top: 5px;
-            display: flex;
-            flex-direction: column;
-
-            .blue-button {
+            .field {
                 margin-top: 10px;
-                width: 100%;
-            }
-            
-            .gray-button {
-                margin-top: 10px;
-                width: 100%;
+
+                input  {
+                    width: 100%;
+                    font-size: large;
+                    
+                    ::placeholder {
+                        color: #6c757d;
+                    }
+        
+                    &:-webkit-autofill {
+                        font-family: inherit;
+                        font-size: inherit;
+                    }
+                }
+
+                input[type="file"] {
+                    display: none;
+                }
+        
+                .error-message {
+                    margin: 0px;
+                    padding-top: 5px;
+                    color: $color-error;
+                }
+            } 
+
+            .actions {
+                margin-top: 5px;
+                display: flex;
+                flex-direction: column;
+
+                .blue-button {
+                    margin-top: 10px;
+                    width: 100%;
+                }
+                
+                .gray-button {
+                    margin-top: 10px;
+                    width: 100%;
+                }
             }
         }
     }
