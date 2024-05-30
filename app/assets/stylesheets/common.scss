@@ -1,3 +1,18 @@
+::file-selector-button {
+  border-color: $color-blue-button;
+  color: $color-blue-button;
+  border: 1px solid $color-blue-button;
+  border-radius: 8px;
+  background-color: transparent;
+  cursor: pointer;
+  height: 45px;
+  margin-right: 10px;
+}
+
+::file-selector-button:hover {
+  background-color: $color-no-fill-button-press;
+}
+
 .button {
   cursor: pointer;
   text-align: center;

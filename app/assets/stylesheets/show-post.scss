@@ -12,7 +12,7 @@
     }
 
     .content {
-      width: 80%;
+      width: 100%;
         
       .p {
         line-height: 1.8;
@@ -47,38 +47,47 @@
     border-left: 1px solid $color-blue-3;
     padding-top: 40px;
 
-    a {
+    a#profile {
+      height: 70px;
+    }
+
+    a#post {
       display: flex;
       flex-direction: row;
-      justify-content: center;
       width: 100%;
       color: $color-blue-button;
       text-decoration: none;
+    }
 
-      .content {
-        padding-right: 70px;
-  
-        .p.account {
-          padding-bottom: 30px;
-          padding-top: 2px;
-        }
+    .content {
+      padding-right: 70px;
 
-        .p.body {
-          padding-bottom: 40px;
-        }
-  
-        .image {
-          display: flex;
-          justify-content: center;
-  
-          .post-image {
-            height: 100%;
-            max-height: 300px;
-            margin-bottom: 60px;
-          }
+      .p.date {
+        padding-top: 2px;
+        padding-bottom: 30px;
+        font-size: medium;
+      }
+
+      .p.account {
+        padding-top: 2px;
+      }
+
+      .p.body {
+        padding-bottom: 40px;
+      }
+
+      .image {
+        display: flex;
+        justify-content: center;
+
+        .post-image {
+          height: 100%;
+          max-height: 300px;
+          margin-bottom: 60px;
         }
       }
     }
+
   }
 }
 

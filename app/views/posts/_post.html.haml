@@ -1,13 +1,15 @@
 %li#show-post
-  %a{href: post_path(post), id: 'profile'}
+  %a{href: user_path(post.user.nickname), id: 'profile'}
     - if post.user.profile_picture.attached?
       = image_tag (post.user.profile_picture), alt: 'profile picture', class: 'profile-picture'
     - else
       = image_tag "no_profile_picture.png", alt: 'no profile picture', class: 'profile-picture'
+  %a{href: post_path(post), id: 'post'}
     .content
       .p
         %span.name #{post.user.first_name} #{post.user.last_name}
       .p.account @#{post.user.nickname}
+      .p.date Published at #{post.published_at.strftime('%m/%d/%Y')}
       %h4 #{post.title}
       .p.body #{post.body}
       .image

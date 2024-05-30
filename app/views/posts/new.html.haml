@@ -9,8 +9,8 @@
         %li#new-post
           = form_for(@post, url: posts_path, html: { class: 'new-post-info' }) do |f|
             %h4 Add new post
-            = f.text_field :title, placeholder: "Title for your Post", class: "title"
-            = f.text_area :body, placeholder: "Share something with your team!"
+            = f.text_field :title, placeholder: "Title for your Post", class: "title", required: true
+            = f.text_area :body, placeholder: "Share something with your team!", required: true
             - if @post.errors.has_key?(:title)
               - if @post.errors.has_key?(:body)
                 %p.error-message= "Please enter a title and body for your post!"
@@ -20,7 +20,6 @@
               %p.error-message= "Please enter a body for your post!"
             .buttons
               .add-image-button
-                %label{for: "file-upload", class: "button no-fill-button"} Add Image
                 = f.file_field :image, type: "file", id: "file-upload", accept: "image/png, image/jpeg"
               .post-button
                 = f.submit "Post", class: 'button blue-button'
