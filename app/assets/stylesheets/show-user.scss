@@ -1,0 +1,72 @@
+ul {
+  li#personal_info {
+    display: flex;
+    flex-direction: row;
+    border-top: 1px solid $color-blue-3;
+    border-right: 1px solid $color-blue-3;
+    border-left: 1px solid $color-blue-3;
+    padding-top: 40px;
+    padding-bottom: 40px;
+  
+    .content {
+      .name {
+        .name {
+          margin-right: 10px;
+        }
+        .account {
+          padding-bottom: 30px;
+          padding-top: 2px;
+        }
+      }
+
+      .dates {
+        display: flex;
+        align-items: center;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        flex-wrap: wrap;
+
+        span {
+          margin-right: 20px;
+          font-size: medium;
+        }        
+
+        .blue-box {
+          background-color: $color-blue-3;
+          border-radius: 5px;
+          width: 20px;
+          height: 20px;
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+
+  li#account_info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    border-top: 1px solid $color-blue-3;
+    border-right: 1px solid $color-blue-3;
+    border-left: 1px solid $color-blue-3;
+    padding-bottom: 40px;
+    padding-top: 40px;
+    
+    div {
+      width: 33%;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      
+      p {
+        font-weight: bold;
+        margin: 0px;
+      }
+
+      p.number {
+        font-size: xx-large;
+      }
+    }
+  }
+}
+

@@ -1,0 +1,174 @@
+::file-selector-button {
+  border-color: $color-blue-button;
+  color: $color-blue-button;
+  border: 1px solid $color-blue-button;
+  border-radius: 8px;
+  background-color: transparent;
+  cursor: pointer;
+  height: 45px;
+  margin-right: 10px;
+}
+
+::file-selector-button:hover {
+  background-color: $color-no-fill-button-press;
+}
+
+.button {
+  cursor: pointer;
+  text-align: center;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: large;
+}
+
+.blue-button {
+  background-color: $color-blue-button;
+  color: white;
+  border: none;
+}
+
+.blue-button:hover {
+  background-color: $color-blue-button-press;
+}
+
+.gray-button {
+  background-color: $color-gray-button;
+  color: black;
+  border: 1px solid black;
+}
+
+.gray-button:hover {
+  background-color: $color-gray-button-press;
+}
+
+.no-fill-button {
+  border-color: $color-blue-button;
+  color: $color-blue-button;
+  border: 1px solid $color-blue-button;
+}
+
+.no-fill-button:hover {
+  background-color: $color-no-fill-button-press;
+}
+
+.background {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: $color-blue-1;
+  font-family: $font;
+  font-size: large;
+  color: $color-blue-button;
+  height: 100%;
+  min-height: 100vh;
+
+  .box {
+    width: 70%;
+    margin: 30px 8px;
+    display: flex;
+    justify-content: center;
+
+    ul {
+      width: 100%;
+      list-style-type: none;
+      padding: 0;
+
+      li {
+        display: flex;
+        flex-direction: column;
+        padding-top: 20px;
+      }
+    }        
+  }
+    
+  .user {
+    display: flex;
+    flex-wrap: wrap;
+    width: 30%;
+    justify-content: flex-end;
+
+    #user-box {
+      width: 70%;
+      margin: 30px 8px;
+      margin-bottom: 190px;
+      display: flex;
+      justify-content: center;
+
+      a#profile {
+        color: $color-blue-button;
+        text-decoration: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      li {
+        border: 1px solid $color-blue-3;
+        align-items: center;
+      }
+    
+      li#user {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+
+        .p.name {
+          font-weight: bold;
+        }
+
+        .profile-picture {
+          height: 100%;
+          width: 100%;
+          min-width: 250px;
+          padding-left: 75px;
+          padding-right: 75px;
+          padding-top: 20px;
+          padding-bottom: 30px;
+          border-radius: 50%;
+        }
+
+        .blue-button {
+          width: 85%;
+          height: 45px;
+          margin-top: 30px;
+          margin-bottom: 40px;
+        }
+      }
+
+      li#info {
+        border-top: none;
+        padding-bottom: 20px;
+
+        .p {
+          width: 85%;
+          padding-top: 10px;
+          padding-bottom: 10px;
+        }
+      }
+
+      li#sign-out {
+        border-top: none;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        padding-bottom: 20px;
+
+        form {
+          width: 85%;
+         
+          button {
+            border: none;
+            background-color: transparent;
+            color: $color-blue-button;
+            font-family: $font;
+            text-decoration: underline;
+          }         
+        }
+      }
+    }
+  }
+
+  .post {
+    display: flex;
+    flex-wrap: wrap;
+    width: 70%;
+  }
+}

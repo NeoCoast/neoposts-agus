@@ -1,0 +1,13 @@
+.background-sign
+  .sign-container
+    %h2{class: 'title'} Log in
+    = form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'reg-form' }) do |f|
+      .field
+        = f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control input', placeholder: 'Email', required: true
+      .field
+        = f.password_field :password, autocomplete: "current-password", class: 'form-control input', placeholder: 'Password', required: true
+        - if flash.alert && flash.alert.include?("Invalid")
+          %p.error-message= flash.alert
+      .actions
+        = f.submit "Log in", class: 'button blue-button'
+        = render "devise/shared/links"
