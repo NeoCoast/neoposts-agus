@@ -1,9 +1,9 @@
 .background
   .user
-    = render "layouts/user_profile"
+    = render 'layouts/user_profile'
   .post
     .box#post-box
       %ul
         %li#back
-          = link_to "Back", :back
-        = render partial: "post", object: @post
+          = link_to 'Back', :back
+        = render partial: 'post', object: @post

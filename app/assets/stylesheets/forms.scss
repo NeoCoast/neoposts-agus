@@ -20,9 +20,7 @@
         border: 1px solid $color-blue-3;
         border-radius: 10px;
         height: 60px; 
-        padding-left: 30px;
-        padding-right: 25px;
-        padding-top: 5px;
+        padding: 5px 25px 0 30px;
         color: $color-blue-button;
         width: 100%;
       }
@@ -30,9 +28,8 @@
       textarea {
         border: 1px solid $color-blue-3;
         border-radius: 10px;
-        height: 300px;      
-        padding-left: 30px;
-        padding-top: 30px;
+        height: 300px;
+        padding: 30px 0 0 30px;
         color: $color-blue-button;
         margin-top: 10px;
         width: 100%;
@@ -44,7 +41,7 @@
 
       p {
         color: $color-error;
-        margin-bottom: 0px;
+        margin-bottom: 0;
       }
 
       .buttons {
@@ -94,8 +91,7 @@
     }
 
     label {
-      margin-bottom: 2px;
-      margin-top: 7px;
+      margin: 7px 0 0 2px;
     }
 
     label#message {

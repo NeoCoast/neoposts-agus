@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :verify_current_user, only: %i[edit update]
+  before_action :verify_current_user, :find_user, only: %i[edit update]
 
   def show
     @user = User.find_by(nickname: params[:nickname])
@@ -10,12 +10,9 @@ class UsersController < ApplicationController
     @posts = @user.posts.ordered_by_newest
   end
 
-  def edit
-    @user = User.find_by(id: params[:id])
-  end
+  def edit; end
 
   def update
-    @user = User.find_by(id: params[:id])
     if @user.update_with_password(user_params)
       bypass_sign_in @user
       redirect_to user_profile_path(@user.nickname)
@@ -25,6 +22,10 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def find_user
+    @user = User.find_by(id: params[:id])
+  end
 
   def verify_current_user
     redirect_to root_path, alert: "You can't edit other user's profiles" unless current_user.id == params[:id].to_i

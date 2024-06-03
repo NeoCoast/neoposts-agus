@@ -6,8 +6,7 @@
     .profile-picture {
       height: 70px;
       width: 70px;
-      margin-left: 45px;
-      margin-right: 30px;
+      margin: 0 30px 0 45px;
       border-radius: 50%;
     }
 
@@ -30,8 +29,7 @@
     text-decoration: underline;
 
     a {
-      margin-bottom: 20px;
-      margin-left: 40px;
+      margin: 0 0 20px 40px;
       color: $color-blue-button;
     }
   }
@@ -62,8 +60,7 @@
       width: 100%;
 
       .p.date {
-        padding-top: 2px;
-        padding-bottom: 30px;
+        padding: 2px 0 30px;
         font-size: medium;
       }
 

@@ -1,16 +1,16 @@
 .background
   .user
-    = render "layouts/user_profile"
+    = render 'layouts/user_profile'
   .post
     .box#post-box
       %ul
         %li#back
-          = link_to "Back", :back
+          = link_to 'Back', :back
         %li#personal_info
           - if @user.profile_picture.attached?
             = image_tag (@user.profile_picture), alt: 'profile picture', class: 'profile-picture'
           - else
-            = image_tag "no_profile_picture.png", alt: 'no profile picture', class: 'profile-picture'
+            = image_tag 'no_profile_picture.png', alt: 'no profile picture', class: 'profile-picture'
           .content
             .name
               %span.name #{@user.first_name} #{@user.last_name}
@@ -22,7 +22,7 @@
               %span Joined #{@user.created_at.strftime('%m/%d/%Y')}
           - if @user == current_user
             .edit-profile
-              = link_to "Edit Profile", edit_user_path(id: @user.id), class: 'button no-fill-button'
+              = link_to 'Edit Profile', edit_user_path(id: @user.id), class: 'button no-fill-button'
         %li#account_info
           %div
             %p.number #{@user.posts.count.to_s}
@@ -33,4 +33,4 @@
           %div
             %p.number 0
             %p Followers
-        = render partial: "posts/post", collection: @posts, as: :post
+        = render partial: 'posts/post', collection: @posts, as: :post

@@ -1,7 +1,7 @@
 .background
   .user
-    = render "layouts/user_profile"
+    = render 'layouts/user_profile'
   .post
     .box#post-box
       %ul
-        = render partial: "post", collection: @posts, as: :post
+        = render partial: 'post', collection: @posts, as: :post

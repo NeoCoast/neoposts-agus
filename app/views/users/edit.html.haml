@@ -1,59 +1,59 @@
 .background
   .user
-    = render "layouts/user_profile"
+    = render 'layouts/user_profile'
   .post
     .box#post-box
       %ul
         %li#back
-          = link_to "Back", :back
+          = link_to 'Back', :back
         %li#form
           = form_for(@user, url: user_path(@user.id), method: 'put', html: { class: 'form-info edit-profile-info' }) do |f|
             %h4 Edit profile
 
             %label Email:
-            = f.text_field :email, class: "input", required: true
+            = f.text_field :email, class: 'input', required: true
             - if @user.errors.has_key?(:email)
-              %p.error-message= @user.errors.full_messages_for(:email).join(", ")
+              %p.error-message= @user.errors.full_messages_for(:email).join(', ')
 
             %label Nickname:
-            = f.text_field :nickname, class: "input", required: true
+            = f.text_field :nickname, class: 'input', required: true
             - if @user.errors.has_key?(:nickname)
-              %p.error-message= @user.errors.full_messages_for(:nickname).join(", ")
+              %p.error-message= @user.errors.full_messages_for(:nickname).join(', ')
 
             %label First name:
-            = f.text_field :first_name, class: "input"
+            = f.text_field :first_name, class: 'input'
             - if @user.errors.has_key?(:first_name)
-              %p.error-message= @user.errors.full_messages_for(:first_name).join(", ")
+              %p.error-message= @user.errors.full_messages_for(:first_name).join(', ')
 
             %label Last name:
-            = f.text_field :last_name, class: "input"
+            = f.text_field :last_name, class: 'input'
             - if @user.errors.has_key?(:last_name)
-              %p.error-message= @user.errors.full_messages_for(:last_name).join(", ")
+              %p.error-message= @user.errors.full_messages_for(:last_name).join(', ')
 
             %label Birthday:
-            = f.date_field :birthday, autocomplete: "birthday", class: "input"
+            = f.date_field :birthday, autocomplete: 'birthday', class: 'input'
             - if @user.errors.has_key?(:birthday)
-              %p.error-message= @user.errors.full_messages_for(:birthday).join(",")
+              %p.error-message= @user.errors.full_messages_for(:birthday).join(',')
 
             %label Profile picture:
             .add-image-button
-              = f.file_field :profile_picture, type: "file", id: "file-upload", accept: "image/png, image/jpeg"
+              = f.file_field :profile_picture, type: 'file', id: 'file-upload', accept: 'image/png, image/jpeg'
 
             %label New password:
-            = f.password_field :password, placeholder: "New Password", class: "input"
+            = f.password_field :password, placeholder: 'New Password', class: 'input'
             - if @user.errors.has_key?(:password)
-              %p.error-message= @user.errors.full_messages_for(:password).join(",")
+              %p.error-message= @user.errors.full_messages_for(:password).join(',')
 
             %label Confirm new password:
-            = f.password_field :password_confirmation, placeholder: "Password Confirmation", class: "input"
+            = f.password_field :password_confirmation, placeholder: 'Password Confirmation', class: 'input'
             - if @user.errors.has_key?(:password_confirmation)
               %p.error-message= @user.errors.full_messages_for(:password_confirmation).first
 
-            %h4{id: "change-pass"} Current password
-            = f.password_field :current_password, placeholder: "Current Password", class: "input"
+            %h4{id: 'change-pass'} Current password
+            = f.password_field :current_password, placeholder: 'Current Password', class: 'input'
             %label#message Current password is required to change any personal information.
             - if @user.errors.has_key?(:current_password)
-              %p.error-message= @user.errors.full_messages_for(:current_password).join(",")
+              %p.error-message= @user.errors.full_messages_for(:current_password).join(',')
 
             .post-button
-              = f.submit "Edit Profile", class: 'button blue-button'
+              = f.submit 'Edit Profile', class: 'button blue-button'
