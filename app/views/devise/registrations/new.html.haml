@@ -8,7 +8,7 @@
           %p.error-message= resource.errors.full_messages_for(:email).join(', ')
       .field
         - if @minimum_password_length
-          - placeholder_text = "Password (#{@minimum_password_length} characters minimum)"
+          - placeholder_text = 'Password (#{@minimum_password_length} characters minimum)'
         - else
           - placeholder_text = 'Password'
         = f.password_field :password, autocomplete: 'new-password', class: 'form-control', placeholder: placeholder_text, required: true
