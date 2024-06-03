@@ -1,5 +1,5 @@
 .box#user-box
-  %a{href: user_path(current_user.nickname), id: 'profile'}
+  %a{href: user_profile_path(current_user.nickname), id: 'profile'}
     %ul
       %li#user
         - if current_user.profile_picture.attached?

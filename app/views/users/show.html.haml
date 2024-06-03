@@ -20,6 +20,9 @@
               %span Born #{@user.birthday.strftime('%m/%d/%Y')}
               .blue-box
               %span Joined #{@user.created_at.strftime('%m/%d/%Y')}
+          - if @user == current_user
+            .edit-profile
+              = link_to "Edit Profile", edit_user_path(id: @user.id), class: 'button no-fill-button'
         %li#account_info
           %div
             %p.number #{@user.posts.count.to_s}

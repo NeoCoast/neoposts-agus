@@ -6,10 +6,10 @@
       %ul
         %li#back
           = link_to "Back", :back
-        %li#new-post
-          = form_for(@post, url: posts_path, html: { class: 'new-post-info' }) do |f|
+        %li#form
+          = form_for(@post, url: posts_path, html: { class: 'form-info new-post-info' }) do |f|
             %h4 Add new post
-            = f.text_field :title, placeholder: "Title for your Post", class: "title", required: true
+            = f.text_field :title, placeholder: "Title for your Post", class: "input", required: true
             = f.text_area :body, placeholder: "Share something with your team!", required: true
             - if @post.errors.has_key?(:title)
               - if @post.errors.has_key?(:body)

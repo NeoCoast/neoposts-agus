@@ -1,5 +1,5 @@
 %li#show-post
-  %a{href: user_path(post.user.nickname), id: 'profile'}
+  %a{href: user_profile_path(post.user.nickname), id: 'profile'}
     - if post.user.profile_picture.attached?
       = image_tag (post.user.profile_picture), alt: 'profile picture', class: 'profile-picture'
     - else

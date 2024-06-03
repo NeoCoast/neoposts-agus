@@ -7,6 +7,8 @@ detectors:
     enabled: false
   UncommunicativeModuleName:
     enabled: false
+  Attribute:
+    enabled: false
 
 exclude_paths:
   - "./db/migrate/*"

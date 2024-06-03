@@ -7,6 +7,7 @@ ul {
     border-left: 1px solid $color-blue-3;
     padding-top: 40px;
     padding-bottom: 40px;
+    align-items: center;
   
     .content {
       .name {
@@ -39,6 +40,13 @@ ul {
           margin-right: 8px;
         }
       }
+    }
+
+    .edit-profile {
+      flex-grow: 1;
+      display: flex;
+      justify-content: flex-end;
+      padding-right: 45px;
     }
   }
 

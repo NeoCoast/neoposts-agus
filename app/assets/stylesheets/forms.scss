@@ -1,5 +1,5 @@
 #post-box {
-  li#new-post {
+  li#form {
     display: flex;
     align-items: center;
     border: 1px solid $color-blue-3;
@@ -7,7 +7,7 @@
     border-bottom-right-radius: 10px;
     padding-bottom: 50px;
 
-    .new-post-info {
+    .form-info {
       width: 80%;
       display: flex;
       flex-direction: column;
@@ -16,26 +16,22 @@
         margin-top: 15px;
       }
 
-      .title {
+      .input {
         border: 1px solid $color-blue-3;
         border-radius: 10px;
         height: 60px; 
-        padding-left: 35px;
+        padding-left: 30px;
+        padding-right: 25px;
         padding-top: 5px;
         color: $color-blue-button;
-        margin-top: 5px;
         width: 100%;
-      }
-
-      .title::placeholder {
-        color: $color-blue-button;
       }
 
       textarea {
         border: 1px solid $color-blue-3;
         border-radius: 10px;
         height: 300px;      
-        padding-left: 35px;
+        padding-left: 30px;
         padding-top: 30px;
         color: $color-blue-button;
         margin-top: 10px;
@@ -49,7 +45,6 @@
       p {
         color: $color-error;
         margin-bottom: 0px;
-        margin-top: 10px;
       }
 
       .buttons {
@@ -76,6 +71,47 @@
           }
         }
       }
+    }
+  }
+
+  .new-post-info {
+    .input {
+      margin-top: 5px;
+    }
+
+    .input::placeholder {
+      color: $color-blue-button;
+    }
+  }
+
+  .edit-profile-info {
+    .input::placeholder {
+      color: $color-blue-placeholder;
+    }
+
+    .add-image-button {
+      margin-top: 2px;
+    }
+
+    label {
+      margin-bottom: 2px;
+      margin-top: 7px;
+    }
+
+    label#message {
+      color: $color-blue-placeholder;
+    }
+
+    #change-pass {
+      padding-top: 10px;
+    }
+
+    .post-button {
+      margin-top: 25px;
+    }
+
+    p.error-message {
+      margin-top: none;
     }
   }
 }
