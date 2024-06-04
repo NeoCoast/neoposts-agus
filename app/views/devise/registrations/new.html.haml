@@ -3,43 +3,43 @@
     %h2{class: 'title'} Sign up
     = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'reg-form' }) do |f|
       .field
-        = f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', placeholder: 'Email', required: true
+        = f.email_field :email, autofocus: true, autocomplete: 'email', class: 'form-control', placeholder: 'Email', required: true
         - if resource.errors.has_key?(:email)
-          %p.error-message= resource.errors.full_messages_for(:email).join(", ")
+          %p.error-message= resource.errors.full_messages_for(:email).join(', ')
       .field
         - if @minimum_password_length
           - placeholder_text = "Password (#{@minimum_password_length} characters minimum)"
         - else
-          - placeholder_text = "Password"
-        = f.password_field :password, autocomplete: "new-password", class: 'form-control', placeholder: placeholder_text, required: true
+          - placeholder_text = 'Password'
+        = f.password_field :password, autocomplete: 'new-password', class: 'form-control', placeholder: placeholder_text, required: true
         - if resource.errors.has_key?(:password)
-          %p.error-message= resource.errors.full_messages_for(:password).join(",")
+          %p.error-message= resource.errors.full_messages_for(:password).join(',')
       .field
-        = f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control', placeholder: 'Password confirmation', required: true
+        = f.password_field :password_confirmation, autocomplete: 'new-password', class: 'form-control', placeholder: 'Password confirmation', required: true
         - if resource.errors.has_key?(:encrypted_password)
-          %p.error-message= resource.errors.full_messages_for(:encrypted_password).join(",")
+          %p.error-message= resource.errors.full_messages_for(:encrypted_password).join(',')
         - if resource.errors.has_key?(:password_confirmation)
           %p.error-message= resource.errors.full_messages_for(:password_confirmation).first
       .field
-        = f.text_field :nickname, autocomplete: "nickname", class: 'form-control', placeholder: 'Nickname', required: true
+        = f.text_field :nickname, autocomplete: 'nickname', class: 'form-control', placeholder: 'Nickname', required: true
         - if resource.errors.has_key?(:nickname)
-          %p.error-message= resource.errors.full_messages_for(:nickname).join(",")
+          %p.error-message= resource.errors.full_messages_for(:nickname).join(',')
       .field
-        = f.text_field :first_name, autocomplete: "first-name", class: 'form-control', placeholder: 'First name', required: true
+        = f.text_field :first_name, autocomplete: 'first-name', class: 'form-control', placeholder: 'First name', required: true
         - if resource.errors.has_key?(:first_name)
-          %p.error-message= resource.errors.full_messages_for(:first_name).join(",")
+          %p.error-message= resource.errors.full_messages_for(:first_name).join(',')
       .field
-        = f.text_field :last_name, autocomplete: "last-name", class: 'form-control', placeholder: 'Last name', required: true
+        = f.text_field :last_name, autocomplete: 'last-name', class: 'form-control', placeholder: 'Last name', required: true
         - if resource.errors.has_key?(:last_name)
-          %p.error-message= resource.errors.full_messages_for(:last_name).join(",")
+          %p.error-message= resource.errors.full_messages_for(:last_name).join(',')
       .field
-        = f.date_field :birthday, autocomplete: "birthday", class: 'form-control', required: true
+        = f.date_field :birthday, autocomplete: 'birthday', class: 'form-control', required: true
         - if resource.errors.has_key?(:birthday)
-          %p.error-message= resource.errors.full_messages_for(:birthday).join(",")
+          %p.error-message= resource.errors.full_messages_for(:birthday).join(',')
       .field
-        = f.file_field :profile_picture, type: "file", id: "file-upload", accept: "image/png, image/jpeg"
+        = f.file_field :profile_picture, type: 'file', id: 'file-upload', accept: 'image/png, image/jpeg'
         - if resource.errors.has_key?(:profile_picture)
-          %p.error-message= resource.errors.full_messages_for(:profile_picture).join(",")
+          %p.error-message= resource.errors.full_messages_for(:profile_picture).join(',')
       .actions
-        = f.submit "Sign up", class: 'button blue-button'
-        = render "devise/shared/links"
+        = f.submit 'Sign up', class: 'button blue-button'
+        = render 'devise/shared/links'

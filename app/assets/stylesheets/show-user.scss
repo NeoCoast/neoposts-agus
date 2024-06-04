@@ -5,8 +5,8 @@ ul {
     border-top: 1px solid $color-blue-3;
     border-right: 1px solid $color-blue-3;
     border-left: 1px solid $color-blue-3;
-    padding-top: 40px;
-    padding-bottom: 40px;
+    padding: 40px 0;
+    align-items: center;
   
     .content {
       .name {
@@ -14,16 +14,14 @@ ul {
           margin-right: 10px;
         }
         .account {
-          padding-bottom: 30px;
-          padding-top: 2px;
+          padding: 2px 0 30px;
         }
       }
 
       .dates {
         display: flex;
         align-items: center;
-        margin-top: 10px;
-        margin-bottom: 10px;
+        margin: 10px 0;
         flex-wrap: wrap;
 
         span {
@@ -40,6 +38,13 @@ ul {
         }
       }
     }
+
+    .edit-profile {
+      flex-grow: 1;
+      display: flex;
+      justify-content: flex-end;
+      padding-right: 45px;
+    }
   }
 
   li#account_info {
@@ -49,8 +54,7 @@ ul {
     border-top: 1px solid $color-blue-3;
     border-right: 1px solid $color-blue-3;
     border-left: 1px solid $color-blue-3;
-    padding-bottom: 40px;
-    padding-top: 40px;
+    padding: 40px 0;
     
     div {
       width: 33%;
@@ -60,7 +64,7 @@ ul {
       
       p {
         font-weight: bold;
-        margin: 0px;
+        margin: 0;
       }
 
       p.number {
