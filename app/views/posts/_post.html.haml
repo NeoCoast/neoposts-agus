@@ -7,7 +7,8 @@
   %a{href: post_path(post), id: 'post'}
     .content
       .p
-        %span.name #{post.user.first_name} #{post.user.last_name}
+        %span.name
+          = post.user.full_name
       .p.account @#{post.user.nickname}
       .p.date Published at #{post.published_at.strftime('%m/%d/%Y')}
       %h4 #{post.title}

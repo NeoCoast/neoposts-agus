@@ -369,7 +369,7 @@ DEPENDENCIES
   html2haml
   jbuilder
   jsbundling-rails
-  kaminari
+  kaminari (~> 1.2)
   lefthook
   pg (~> 1.1)
   puma (>= 5.0)

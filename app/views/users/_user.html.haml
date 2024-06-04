@@ -6,7 +6,8 @@
       = image_tag 'no_profile_picture.png', alt: 'no profile picture', class: 'profile-picture'
     .content
       .p
-        %span.name #{user.first_name} #{user.last_name}
+        %span.name
+          = user.full_name
       .p.account @#{user.nickname}
       .p #{user.email}
       .p.date #{user.birthday.strftime('%m/%d/%Y')}

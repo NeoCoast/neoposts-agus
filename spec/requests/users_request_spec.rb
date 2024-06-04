@@ -252,4 +252,56 @@ RSpec.describe 'Users', type: :request do
       end
     end
   end
+
+  describe 'GET /index' do
+    context 'when the user is not logged in' do
+      before { get users_path }
+
+      it { should redirect_to(new_user_session_path) }
+    end
+
+    context 'when the user is logged in' do
+      let!(:users_list) { create_list(:user, 2) }
+
+      before do
+        sign_in users_list[0]
+        get users_path
+      end
+
+      it 'renders a successful response' do
+        expect(response).to be_successful
+      end
+
+      it 'returns all users' do
+        users = controller.instance_variable_get('@users')
+        expect(users.size).to eq(2)
+      end
+
+      it 'includes user 1' do
+        expect(response.body).to include(CGI.escapeHTML(users_list[0].nickname))
+      end
+
+      it 'includes user 2' do
+        expect(response.body).to include(CGI.escapeHTML(users_list[1].nickname))
+      end
+
+      context 'when the users list spans more than one page' do
+        let!(:users_list) { create_list(:user, 6) }
+
+        before do
+          sign_in users_list[0]
+        end
+
+        it 'paginates users, showing 5 users in the first page' do
+          get users_path(page: 1)
+          expect(response.body.scan(/<li id='show-user'[^>]*>/).count).to eq(5)
+        end
+
+        it 'paginates users, showing 1 user in the second page' do
+          get users_path(page: 2)
+          expect(response.body.scan(/<li id='show-user'[^>]*>/).count).to eq(1)
+        end
+      end
+    end
+  end
 end

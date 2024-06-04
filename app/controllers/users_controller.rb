@@ -12,10 +12,6 @@ class UsersController < ApplicationController
 
   def edit; end
 
-  before_action { @user = User.find_by(id: params[:id]) }
-
-  def edit; end
-
   def update
     if @user.update_with_password(user_params)
       bypass_sign_in @user
@@ -23,6 +19,10 @@ class UsersController < ApplicationController
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def index
+    @users = User.page(params[:page]).per(5)
   end
 
   private
