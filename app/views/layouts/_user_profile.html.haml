@@ -7,7 +7,7 @@
         - else
           = image_tag 'no_profile_picture.png', alt: 'no profile picture', class: 'profile-picture'
         .p.name
-          #{current_user.first_name} #{current_user.last_name}
+          = current_user.full_name
         .p
           @#{current_user.nickname}
         = link_to 'New Post', new_post_path, class: 'button blue-button'

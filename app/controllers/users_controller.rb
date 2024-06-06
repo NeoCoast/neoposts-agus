@@ -21,6 +21,10 @@ class UsersController < ApplicationController
     end
   end
 
+  def index
+    @users = User.page(params[:page]).per(5)
+  end
+
   private
 
   def find_user

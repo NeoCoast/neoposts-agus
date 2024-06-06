@@ -1,0 +1,8 @@
+.background
+  .user
+    = render 'layouts/user_profile'
+  .post
+    .box#users-box
+      %ul
+        = render partial: 'user', collection: @users, as: :user
+      = paginate @users
