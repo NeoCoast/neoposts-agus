@@ -10,11 +10,20 @@ ul {
   
     .content {
       .name {
-        .name {
-          margin-right: 10px;
+        display: flex;
+        align-items: center;
+
+        #follow_form {
+          margin-left: 20px;
+
+          input {
+            border-radius: 30px;
+            font-size: medium;
+          }
         }
+
         .account {
-          padding: 2px 0 30px;
+          margin-left: 15px;
         }
       }
 

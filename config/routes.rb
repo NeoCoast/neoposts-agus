@@ -14,4 +14,6 @@ Rails.application.routes.draw do
   resources :posts, only: %i[new create show index]
 
   get '/:nickname', to: 'users#show', as: 'user_profile'
+
+  resources :follow_relationships, only: %i[create destroy]
 end
