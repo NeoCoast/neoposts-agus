@@ -25,14 +25,21 @@
           - if @user == current_user
             .edit-profile
               = link_to 'Edit Profile', edit_user_path(id: @user.id), class: 'button no-fill-button'
-        %li#account_info
-          %div
-            %p.number #{@user.posts.count.to_s}
-            %p Posts
-          %div
-            %p.number 0
-            %p Following
-          %div
-            %p.number 0
-            %p Followers
-        = render partial: 'posts/post', collection: @posts, as: :post
+        %nav
+          #nav-tab{class: 'nav nav-tabs justify-content-center', role: 'tablist'}
+            %button{class: 'nav-link active', id: 'nav-posts-tab', 'data-bs-toggle': 'tab', 'data-bs-target': '#nav-posts', role: 'tab', 'aria-controls': 'nav-posts', 'aria-selected': 'true'}
+              %p #{@user.posts.count.to_s}
+              Posts
+            %button{class: 'nav-link', id: 'nav-following-tab', 'data-bs-toggle': 'tab', 'data-bs-target': '#nav-following', role: 'tab', 'aria-controls': 'nav-following', 'aria-selected': 'false'}
+              %p #{@user.following.count}
+              Following
+            %button{class: 'nav-link', id: 'nav-followers-tab', 'data-bs-toggle': 'tab', 'data-bs-target': '#nav-followers', role: 'tab', 'aria-controls': 'nav-followers', 'aria-selected': 'false'}
+              %p #{@user.followers.count}
+              Followers
+          #nav-tabContent{class: 'tab-content'}
+            .tab-pane.fade.show.active{ id: 'nav-posts', role: 'tabpanel', 'aria-labelledby': 'nav-posts-tab'}
+              = render partial: 'posts/post', collection: @posts, as: :post
+            .tab-pane.fade{ id: 'nav-following', role: 'tabpanel', 'aria-labelledby': 'nav-following-tab'}
+              = render partial: 'user', collection: @user.following, as: :user
+            .tab-pane.fade{ id: 'nav-followers', role: 'tabpanel', 'aria-labelledby': 'nav-followers-tab'}
+              = render partial: 'user', collection: @user.followers, as: :user

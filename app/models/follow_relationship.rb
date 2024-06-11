@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 class FollowRelationship < ApplicationRecord
-  validates :follower_id, presence: true
-  validates :followed_id, presence: true
+  validates :follower_id, :followed_id, presence: true
   validates :follower_id, uniqueness: { scope: :followed_id }
   validate :cannot_follow_themselves
 
