@@ -108,6 +108,10 @@ RSpec.describe 'Posts', type: :request do
   end
 
   describe 'GET /index' do
+    let(:new_follow_relationship) { create(:follow_relationship) }
+    let!(:followed_posts) { create_list(:post, 2, user: new_follow_relationship.followed) }
+    let!(:unfollowed_post) { create(:post) }
+
     context 'when the user is not logged in' do
       before { get posts_path }
 
@@ -115,10 +119,8 @@ RSpec.describe 'Posts', type: :request do
     end
 
     context 'when the user is logged in' do
-      let!(:created_posts) { create_list(:post, 2) }
-
       before do
-        sign_in created_posts[0].user
+        sign_in new_follow_relationship.follower
         get posts_path
       end
 
@@ -126,23 +128,26 @@ RSpec.describe 'Posts', type: :request do
         expect(response).to be_successful
       end
 
-      it 'returns all posts' do
-        posts = controller.instance_variable_get('@posts')
-        expect(posts.size).to eq(2)
+      it 'should display the posts of the followed users' do
+        expect(response.body).to include(CGI.escapeHTML(followed_posts[0].user.nickname))
       end
 
-      it 'includes post 1' do
-        expect(response.body).to include(CGI.escapeHTML(created_posts[0].title))
+      it 'should not display the posts of the unfollowed users' do
+        expect(response.body).not_to include(CGI.escapeHTML(unfollowed_post.user.nickname))
       end
 
-      it 'includes post 2' do
-        expect(response.body).to include(CGI.escapeHTML(created_posts[1].title))
+      it 'includes the first post of followed user' do
+        expect(response.body).to include(CGI.escapeHTML(followed_posts[0].title))
+      end
+
+      it 'includes the second post of followed user' do
+        expect(response.body).to include(CGI.escapeHTML(followed_posts[1].title))
       end
 
       it 'returns posts ordered by newest' do
         posts = controller.instance_variable_get('@posts')
-        expect(posts.first.title).to eq(created_posts[1].title) # newest first
-        expect(posts.second.title).to eq(created_posts[0].title)
+        expect(posts.first.title).to eq(followed_posts[1].title) # newest first
+        expect(posts.second.title).to eq(followed_posts[0].title)
       end
     end
   end
