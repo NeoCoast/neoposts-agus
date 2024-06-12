@@ -39,10 +39,10 @@
 #users-box ul li:first-child {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+  border-top: 1px solid $color-blue-3;
 }
 
 #users-box ul li:last-child {
-  border-bottom: 1px solid $color-blue-3;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 }
@@ -50,7 +50,7 @@
 li#show-user {
   display: flex;
   flex-direction: row;
-  border-top: 1px solid $color-blue-3;
+  border-bottom: 1px solid $color-blue-3;
   border-right: 1px solid $color-blue-3;
   border-left: 1px solid $color-blue-3;
   padding-top: 40px;
