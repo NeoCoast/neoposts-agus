@@ -16,6 +16,7 @@
               %span.name
                 = @user.full_name
               %span.account @#{@user.nickname}
+              = render 'follow_relationships/follow_form'
             .dates
               .blue-box
               %span Born #{@user.birthday.strftime('%m/%d/%Y')}
