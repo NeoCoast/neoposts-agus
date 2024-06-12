@@ -56,30 +56,30 @@ ul {
     }
   }
 
-  li#account_info {
+  #nav-tab {
+    border-left: 1px solid;
+    border-right: 1px solid;
+    font-weight: bold;
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    border-top: 1px solid $color-blue-3;
-    border-right: 1px solid $color-blue-3;
-    border-left: 1px solid $color-blue-3;
-    padding: 40px 0;
-    
-    div {
-      width: 33%;
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      
-      p {
-        font-weight: bold;
-        margin: 0;
-      }
+    justify-content: space-between;
+    border-color: $color-blue-3;
+  }
 
-      p.number {
-        font-size: xx-large;
-      }
+  .nav-tabs .nav-link {
+    color: $color-blue-button;
+    flex: 1;
+    padding: 20px 0 30px;
+    font-size: medium;
+
+    p {
+      font-size: x-large;
+      margin-bottom: 0;
     }
+  }
+
+  .nav-tabs .nav-link.active {
+    color: $color-blue-button;
+    border: 1px solid $color-blue-3;
   }
 }
 
