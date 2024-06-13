@@ -1,3 +1,4 @@
 $("#follow_form").html("<%= escape_javascript(render('follow_relationships/follow')) %>");
 $("#nav-followers-tab p").html('<%= escape_javascript("#{@user.followers.count}") %>');
 $("#following.p").html('<%= escape_javascript("Following: #{current_user.following.count}") %>');
+$("#nav-followers").html('<%= escape_javascript(render(partial: 'users/user', collection: @user.followers, as: :user)) %>');

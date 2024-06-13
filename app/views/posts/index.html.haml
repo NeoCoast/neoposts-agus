@@ -3,5 +3,11 @@
     = render 'layouts/user_profile'
   .post
     .box.all-posts#post-box
-      %ul
-        = render partial: 'post', collection: @posts, as: :post
+      - if @posts.any?
+        %ul
+          = render partial: 'post', collection: @posts, as: :post
+      - else
+        .no-posts
+          = image_tag 'no_posts.png', alt: 'no posts'
+          %p No posts available
+          %p Follow some users to see their posts
