@@ -38,6 +38,8 @@
             %label Profile picture:
             .add-image-button
               = f.file_field :profile_picture, type: 'file', id: 'file-upload', accept: 'image/png, image/jpeg'
+              - if @user.errors.has_key?(:profile_picture)
+                %p.error-message= @user.errors.full_messages_for(:profile_picture).first
 
             %label New password:
             = f.password_field :password, placeholder: 'New Password', class: 'input'
@@ -50,7 +52,7 @@
               %p.error-message= @user.errors.full_messages_for(:password_confirmation).first
 
             %h4{id: 'change-pass'} Current password
-            = f.password_field :current_password, placeholder: 'Current Password', class: 'input'
+            = f.password_field :current_password, placeholder: 'Current Password', class: 'input', required: true
             %label#message Current password is required to change any personal information.
             - if @user.errors.has_key?(:current_password)
               %p.error-message= @user.errors.full_messages_for(:current_password).join(',')

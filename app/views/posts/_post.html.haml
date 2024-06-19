@@ -1,9 +1,10 @@
 %li#show-post
   %a{href: user_profile_path(post.user.nickname), id: 'profile'}
-    - if post.user.profile_picture.attached?
-      = image_tag (post.user.profile_picture), alt: 'profile picture', class: 'profile-picture'
-    - else
-      = image_tag 'no_profile_picture.png', alt: 'no profile picture', class: 'profile-picture'
+    .img-container.small
+      - if post.user.profile_picture.attached?
+        = image_tag (post.user.profile_picture), alt: 'profile picture', class: 'profile-picture'
+      - else
+        = image_tag 'no_profile_picture.png', alt: 'no profile picture', class: 'profile-picture'
   %a{href: post_path(post), id: 'post'}
     .content
       .p
