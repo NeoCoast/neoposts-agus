@@ -16,4 +16,6 @@ Rails.application.routes.draw do
   get '/:nickname', to: 'users#show', as: 'user_profile'
 
   resources :follow_relationships, only: %i[create destroy]
+
+  resources :comments, only: %i[create]
 end

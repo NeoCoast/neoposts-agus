@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 class Post < ApplicationRecord
-  validates :title, :body, presence: true
-
-  belongs_to :user
-
   before_validation :set_published_at, on: :create
 
-  has_one_attached :image
+  validates :title, :body, presence: true
   validate :validate_image_type
+
+  belongs_to :user
+  has_one_attached :image
+  has_many :comments, as: :commentable, dependent: :destroy
 
   scope :ordered_by_newest, -> { order(published_at: :desc) }
 
