@@ -217,6 +217,26 @@ RSpec.describe 'FollowRelationships', type: :request do
           end.to change(FollowRelationship, :count).by(0)
         end
       end
+
+      context 'when the follow relationship belongs to another user' do
+        let!(:new_follow_relationship2) { create(:follow_relationship) }
+
+        it 'does not delete any follow relationship' do
+          expect do
+            delete follow_relationship_path(id: new_follow_relationship2.id), xhr: true
+          end.to change(FollowRelationship, :count).by(0)
+        end
+
+        it 'creates an alert' do
+          delete follow_relationship_path(id: new_follow_relationship2.id)
+          expect(flash[:alert]).to eq('Record not found.')
+        end
+
+        it 'redirects to root path' do
+          delete follow_relationship_path(id: new_follow_relationship2.id)
+          expect(response).to redirect_to(root_path)
+        end
+      end
     end
   end
 end

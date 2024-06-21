@@ -1,6 +1,7 @@
 <% if @commentable.class.name == "Comment" %>
   $("#comments-comment-<%= @commentable.id %>").children('.comment-comments').first().append('<%= escape_javascript(render partial: 'comments/comment', object: @comment) %>');
   $("#comments-comment-<%= @commentable.id %> #comment_content").val('');
+  $("#comments-count-<%= @commentable.id %>").html('<%= escape_javascript("#{@commentable.comments.count} Comments") %>');
 <% else %>
   $("#comments-post-<%= @commentable.id %> .post-comments").append('<%= escape_javascript(render partial: 'comments/comment', object: @comment) %>');
   $("#comments-post-<%= @commentable.id %> #comments-count").html('<%= escape_javascript("#{@commentable.comments.count} Comments") %>');

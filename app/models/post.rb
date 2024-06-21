@@ -9,6 +9,7 @@ class Post < ApplicationRecord
   belongs_to :user
   has_one_attached :image
   has_many :comments, as: :commentable, dependent: :destroy
+  has_many :likes, as: :likeable, dependent: :destroy
 
   scope :ordered_by_newest, -> { order(published_at: :desc) }
 

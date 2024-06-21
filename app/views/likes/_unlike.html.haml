@@ -1,0 +1,7 @@
+- likeable = @likeable || local_assigns[:likeable]
+- @like = current_user.likes.find_by(likeable_id: likeable.id)
+
+= form_for(@like, remote: true, html: {id: "like-form-#{likeable.id}", class: 'like-form', method: :delete}) do |f|
+  = hidden_field_tag :id, @like.id
+  = f.button type: 'submit', class: 'heart-button' do
+    %i.bi.bi-heart-fill
