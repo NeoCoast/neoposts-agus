@@ -40,16 +40,25 @@
         display: flex;
         align-items: center;
 
-        .search-input {
-            height: 50px;
-            background-image: url('magnifying_glass.png');
-            background-repeat:no-repeat;
-            background-position-y: center;
-            background-position-x: 15px;
-            padding-left: 45px;
-            background-size: 20px;
-            width: 65%;
-            margin-left: 70px;
+        form {
+            width: 100%;
+
+            .search-input {
+                height: 50px;
+                background-image: url('magnifying_glass.png');
+                background-repeat:no-repeat;
+                background-position-y: center;
+                background-position-x: 15px;
+                padding-left: 45px;
+                background-size: 20px;
+                width: 65%;
+                margin-left: 70px;
+                font-family: $font;
+            }
+
+            input[type="submit"] {
+                display: none;
+            }
         }
     }
 }

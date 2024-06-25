@@ -3,6 +3,14 @@
     = render 'layouts/user_profile'
   .post
     .box#users-box
-      %ul
-        = render partial: 'user', collection: @users, as: :user
-      = paginate @users
+      - if @users.any?
+        %ul
+          = render partial: 'user', collection: @users, as: :user
+        = paginate @users
+      - else
+        .no-users
+          .text
+            %p#ops Oops...
+            %p No items match
+            %p your search
+          = image_tag 'no_matches.png', alt: 'No items match your search'
