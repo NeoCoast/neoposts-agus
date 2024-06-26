@@ -65,9 +65,7 @@ RSpec.describe 'Posts', type: :request do
     context 'when the user is logged in' do
       let(:new_user) { create(:user) }
 
-      before do
-        sign_in new_user
-      end
+      before { sign_in new_user }
 
       context 'with valid attributes' do
         let(:valid_attributes) { attributes_for(:post) }
@@ -148,6 +146,62 @@ RSpec.describe 'Posts', type: :request do
         posts = controller.instance_variable_get('@posts')
         expect(posts.first.title).to eq(followed_posts[1].title) # newest first
         expect(posts.second.title).to eq(followed_posts[0].title)
+      end
+    end
+  end
+
+  describe 'DELETE /destroy' do
+    let!(:new_post) { create(:post) }
+
+    context 'when the user is not logged in' do
+      before { delete post_path(new_post.id) }
+
+      it { should redirect_to(new_user_session_path) }
+    end
+
+    context 'when the user is logged in' do
+      let(:new_user) { create(:user) }
+      let!(:logged_user_post) { create(:post, user: new_user) }
+
+      before { sign_in new_user }
+
+      context 'when the post belongs to the logged in user' do
+        it 'deletes the post' do
+          expect do
+            delete post_path(logged_user_post.id)
+          end.to change(Post, :count).by(-1)
+        end
+
+        it 'redirects to root path' do
+          delete post_path(logged_user_post.id)
+          expect(response).to redirect_to(root_path)
+        end
+      end
+
+      context 'when the post does not belong to the logged in user' do
+        it 'does not delete the post' do
+          expect do
+            delete post_path(new_post.id)
+          end.to change(Post, :count).by(0)
+        end
+
+        it 'redirects to root path' do
+          delete post_path(new_post.id)
+          expect(response).to redirect_to(root_path)
+        end
+      end
+
+      context 'when deleting a non existent post' do
+        it 'does not delete the post' do
+          expect do
+            delete post_path(0)
+          end.to change(Post, :count).by(0)
+        end
+
+        it 'redirects to root path' do
+          delete post_path(0)
+          expect(response).to redirect_to(root_path)
+        end
       end
     end
   end
