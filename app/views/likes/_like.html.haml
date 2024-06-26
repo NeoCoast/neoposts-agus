@@ -1,0 +1,8 @@
+- likeable = @likeable || local_assigns[:likeable]
+
+= form_for(likeable.likes.build, remote: true, html: { id: "like-form-#{likeable.id}", class: 'like-form' }) do |f|
+  = hidden_field_tag :likeable_id, likeable.id
+  = hidden_field_tag :likeable_type, likeable.class.name
+  = f.button type: 'submit', class: 'heart-button' do
+    %i.bi.bi-heart
+
