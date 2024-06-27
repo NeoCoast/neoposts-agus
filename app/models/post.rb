@@ -11,7 +11,13 @@ class Post < ApplicationRecord
   has_many :comments, as: :commentable, dependent: :destroy
   has_many :likes, as: :likeable, dependent: :destroy
 
-  scope :ordered_by_newest, -> { order(published_at: :desc) }
+  scope :ordered_by_publishing_date, -> { order(published_at: :desc) }
+  scope :ordered_by_number_of_likes, -> { order(likes_count: :desc) }
+  scope :ordered_by_trending, lambda {
+    order(
+      Arel.sql("posts.likes_count / EXP(DATE_PART('day', NOW() - posts.created_at) / 4.0) DESC")
+    )
+  }
 
   private
 

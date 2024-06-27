@@ -3,6 +3,7 @@
 FactoryBot.define do
   factory :comment do
     user
+    likes_count { Faker::Number.between(from: 1, to: 100) }
 
     trait :commentable_type_post do
       association :commentable, factory: :post

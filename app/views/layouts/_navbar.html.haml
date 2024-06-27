@@ -1,11 +1,10 @@
 %nav.navbar
-  %a{href: root_path}
-    .logo
-      .logo-container
-        = image_tag 'logo_neocoast.png', class: 'logo-img'
-        %span.logo-name neoposts
+  %a{href: root_path, class: 'logo'}
+    .logo-container
+      = image_tag 'logo_neocoast.png', class: 'logo-img'
+      %span.logo-name neoposts
   - if current_page?(users_path) || current_page?(root_path)
     .search-bar
       = form_tag(users_path, method: :get) do
         = text_field_tag :query, params[:query], placeholder: 'Search users...', class: 'search-input form-control input'
-        = submit_tag "Search"
+        = submit_tag 'Search'
