@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     @user = User.find_by(nickname: params[:nickname])
     return redirect_to root_path, alert: 'User not found' unless @user
 
-    @posts = @user.posts.ordered_by_newest
+    @posts = @user.posts.ordered_by_publishing_date
   end
 
   def edit; end

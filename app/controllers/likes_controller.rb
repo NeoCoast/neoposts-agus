@@ -9,8 +9,9 @@ class LikesController < ApplicationController
 
   def destroy
     like = current_user.likes.find(params[:id])
-    @likeable = like&.likeable_type&.constantize&.find(like.likeable_id)
-    like&.destroy
+    @likeable = like.likeable_type.constantize.find(like.likeable_id)
+    like.destroy
+    @likeable.reload
     respond_to_format
   end
 

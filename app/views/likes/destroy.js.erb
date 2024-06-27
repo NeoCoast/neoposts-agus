@@ -1,7 +1,7 @@
 $("#like-form-<%= @likeable.id %>").replaceWith('<%= escape_javascript(render("like")) %>');
 
 <% if @likeable.class.name == "Post" %>
-  $("#comments-post-<%= @likeable.id %> #likes-count").html('<%= escape_javascript("#{@likeable.likes.count} Likes") %>');
+  $("#comments-post-<%= @likeable.id %> #likes-count").html('<%= escape_javascript("#{@likeable.likes_count} Likes") %>');
 <% else %>
-  $("#likes-count-<%= @likeable.id %>").html('<%= escape_javascript("#{@likeable.likes.count} Likes") %>');
+  $("#likes-count-<%= @likeable.id %>").html('<%= escape_javascript("#{@likeable.likes_count} Likes") %>');
 <% end %>

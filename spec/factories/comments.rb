@@ -3,6 +3,7 @@
 FactoryBot.define do
   factory :comment do
     user
+    likes_count { 0 }
 
     trait :commentable_type_post do
       association :commentable, factory: :post

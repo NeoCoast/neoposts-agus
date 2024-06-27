@@ -45,7 +45,7 @@ RSpec.describe 'Likes', type: :request do
 
         it 'renders increased likes count' do
           post likes_path, params:, xhr: true
-          expect(response.body).to include(CGI.escapeHTML(new_post.likes.count.to_s))
+          expect(response.body).to include(CGI.escapeHTML((new_post.likes_count + 1).to_s))
         end
       end
 
@@ -74,7 +74,7 @@ RSpec.describe 'Likes', type: :request do
 
         it 'renders increased likes count' do
           post likes_path, params:, xhr: true
-          expect(response.body).to include(CGI.escapeHTML(new_comment.likes.count.to_s))
+          expect(response.body).to include(CGI.escapeHTML((new_comment.likes_count + 1).to_s))
         end
       end
 
@@ -139,7 +139,7 @@ RSpec.describe 'Likes', type: :request do
 
         it 'renders decreased likes count' do
           delete like_path(id: post_like.id), xhr: true
-          expect(response.body).to include(CGI.escapeHTML(post_like.likeable.likes.count.to_s))
+          expect(response.body).to include(CGI.escapeHTML((post_like.likeable.likes_count - 1).to_s))
         end
       end
 
@@ -164,7 +164,7 @@ RSpec.describe 'Likes', type: :request do
 
         it 'renders decreased likes count' do
           delete like_path(id: comment_like.id), xhr: true
-          expect(response.body).to include(CGI.escapeHTML(comment_like.likeable.likes.count.to_s))
+          expect(response.body).to include(CGI.escapeHTML((comment_like.likeable.likes_count - 1).to_s))
         end
       end
 
