@@ -27,6 +27,32 @@
       color: $color-blue-button;
     }
   }
+
+  .no-users {
+    display: flex;
+    align-items: center;
+    margin-top: 10%;
+
+    .text {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 150px;
+
+      p {
+        color: #575757;
+        margin: 0;
+      }
+
+      #ops {
+        margin-bottom: 20px;
+      }
+    }
+
+    img {
+      height: 40vh;
+    }
+  }
 }
 
 #users-box ul li:first-child {

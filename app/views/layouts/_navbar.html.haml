@@ -4,5 +4,8 @@
       .logo-container
         = image_tag 'logo_neocoast.png', class: 'logo-img'
         %span.logo-name neoposts
-  .search-bar
-    %input.search-input{ type: 'text', class: 'form-control input' }
+  - if controller_name == 'users' && action_name == 'index'
+    .search-bar
+      = form_tag(users_path, method: :get) do
+        = text_field_tag :query, params[:query], placeholder: 'Search users...', class: 'search-input form-control input'
+        = submit_tag "Search"

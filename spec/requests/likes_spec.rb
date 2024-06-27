@@ -40,7 +40,7 @@ RSpec.describe 'Likes', type: :request do
 
         it 'renders unlike form' do
           post likes_path, params:, xhr: true
-          expect(response.body).to include(CGI.escapeHTML('Unlike'))
+          expect(response.body).to include(CGI.escapeHTML('bi-heart-fill'))
         end
 
         it 'renders increased likes count' do
@@ -69,7 +69,7 @@ RSpec.describe 'Likes', type: :request do
 
         it 'renders unlike form' do
           post likes_path, params:, xhr: true
-          expect(response.body).to include(CGI.escapeHTML('Unlike'))
+          expect(response.body).to include(CGI.escapeHTML('bi-heart-fill'))
         end
 
         it 'renders increased likes count' do
@@ -134,7 +134,7 @@ RSpec.describe 'Likes', type: :request do
 
         it 'renders like form' do
           delete like_path(id: post_like.id), xhr: true
-          expect(response.body).to include(CGI.escapeHTML('Like'))
+          expect(response.body).to include(CGI.escapeHTML('bi-heart'))
         end
 
         it 'renders decreased likes count' do
@@ -159,7 +159,7 @@ RSpec.describe 'Likes', type: :request do
 
         it 'renders like form' do
           delete like_path(id: comment_like.id), xhr: true
-          expect(response.body).to include(CGI.escapeHTML('Like'))
+          expect(response.body).to include(CGI.escapeHTML('bi-heart'))
         end
 
         it 'renders decreased likes count' do

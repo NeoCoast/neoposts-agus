@@ -28,6 +28,17 @@ class User < ApplicationRecord
   has_many :liked_posts, through: :likes, source: :likeable, source_type: 'Post'
   has_many :liked_comments, through: :likes, source: :likeable, source_type: 'Comment'
 
+  scope :ordered_by_first_name, -> { order(first_name: :asc) }
+
+  scope :search, lambda { |query|
+    if query.present?
+      where('LOWER(nickname) LIKE :query OR LOWER(first_name) LIKE :query OR LOWER(last_name) LIKE :query',
+            query: "%#{query.downcase}%").ordered_by_first_name
+    else
+      all.ordered_by_first_name
+    end
+  }
+
   def full_name
     "#{first_name} #{last_name}"
   end

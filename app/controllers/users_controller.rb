@@ -22,7 +22,7 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.page(params[:page]).per(5)
+    @users = User.search(params[:query])&.page(params[:page])&.per(5)
   end
 
   private
@@ -37,6 +37,6 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:email, :nickname, :first_name, :last_name, :birthday, :profile_picture,
-                                 :current_password, :password, :password_confirmation)
+                                 :current_password, :password, :password_confirmation, :query)
   end
 end

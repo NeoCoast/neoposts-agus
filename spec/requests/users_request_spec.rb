@@ -261,36 +261,67 @@ RSpec.describe 'Users', type: :request do
     end
 
     context 'when the user is logged in' do
-      let!(:users_list) { create_list(:user, 2) }
+      before { sign_in users_list[0] }
 
-      before do
-        sign_in users_list[0]
-        get users_path
+      context 'when no search query is provided' do
+        let!(:users_list) { create_list(:user, 2) }
+
+        before { get users_path }
+
+        it 'renders a successful response' do
+          expect(response).to be_successful
+        end
+
+        it 'returns all users' do
+          users = controller.instance_variable_get('@users')
+          expect(users.size).to eq(2)
+        end
+
+        it 'includes user 1' do
+          expect(response.body).to include(CGI.escapeHTML(users_list[0].nickname))
+        end
+
+        it 'includes user 2' do
+          expect(response.body).to include(CGI.escapeHTML(users_list[1].nickname))
+        end
       end
 
-      it 'renders a successful response' do
-        expect(response).to be_successful
-      end
+      context 'when a search query is provided' do
+        let!(:users_list) { create_list(:user, 3) }
 
-      it 'returns all users' do
-        users = controller.instance_variable_get('@users')
-        expect(users.size).to eq(2)
-      end
+        it 'returns users matching the query in nickname' do
+          get users_path, params: { query: users_list[0].nickname }
+          expect(response.body).to include(CGI.escapeHTML(users_list[0].nickname))
+        end
 
-      it 'includes user 1' do
-        expect(response.body).to include(CGI.escapeHTML(users_list[0].nickname))
-      end
+        it 'returns users matching the query in first_name' do
+          get users_path, params: { query: users_list[1].first_name }
+          expect(response.body).to include(CGI.escapeHTML(users_list[1].first_name))
+        end
 
-      it 'includes user 2' do
-        expect(response.body).to include(CGI.escapeHTML(users_list[1].nickname))
+        it 'returns users matching the query in last_name' do
+          get users_path, params: { query: users_list[2].last_name }
+          expect(response.body).to include(CGI.escapeHTML(users_list[2].last_name))
+        end
+
+        it 'returns users matching the query case-insensitively' do
+          get users_path, params: { query: users_list[0].nickname.upcase }
+          expect(response.body).to include(CGI.escapeHTML(users_list[0].nickname))
+        end
+
+        it 'returns users matching the query partially' do
+          get users_path, params: { query: users_list[1].nickname[1..-2] } # remove first and last character
+          expect(response.body).to include(CGI.escapeHTML(users_list[1].nickname))
+        end
+
+        it 'does not return users not matching the query' do
+          get users_path, params: { query: 'nonexistentname' }
+          expect(response.body).not_to include(CGI.escapeHTML(users_list[2].nickname))
+        end
       end
 
       context 'when the users list spans more than one page' do
         let!(:users_list) { create_list(:user, 6) }
-
-        before do
-          sign_in users_list[0]
-        end
 
         it 'paginates users, showing 5 users in the first page' do
           get users_path(page: 1)
