@@ -80,12 +80,38 @@
     }
 
     #icons-post {
-      justify-content: flex-end;
       margin-bottom: 40px;
-      padding-right: 70px;
+      padding: 0 70px;
 
-      .like-form {
-        margin-left: 20px;
+      .bi-trash3 {
+        cursor: pointer;
+      }
+
+      #like-comment {
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+
+        .like-form {
+          margin-left: 10px;
+        }
+      }
+
+      .warning-img {
+        display: flex;
+        justify-content: center;
+        padding-top: 30px;
+      }
+
+      #body {
+        display: flex;
+        justify-content: center;
+        color: $color-gray-p;
+      }
+
+      .delete-button {
+        background-color: $color-red-delete;
+        color: white;
       }
     }
 
@@ -96,24 +122,22 @@
         cursor: pointer;
       }
 
-      .heart-button {
+      .icon-button {
         width: 28px;
         height: 28px;
         padding: 0;
         border: none;
         background-color: transparent;
 
-        .bi-heart-fill::before {
-          cursor: pointer;
-          font-size: 28px;
-          color: $color-red-like;
-        }
-
-        .bi-heart::before {
+        ::before {
           cursor: pointer;
           font-size: 28px;
           color: $color-blue-button;
         }
+      }
+
+      .bi-heart-fill::before {
+        color: $color-red-like;
       }
     }
   }

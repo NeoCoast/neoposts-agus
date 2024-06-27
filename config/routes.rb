@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   resources :users, only: %i[edit update index]
 
-  resources :posts, only: %i[new create show index]
+  resources :posts, only: %i[new create show index destroy]
 
   get '/:nickname', to: 'users#show', as: 'user_profile'
 

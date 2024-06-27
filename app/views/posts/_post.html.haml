@@ -20,12 +20,26 @@
             - if post.image.attached?
               = image_tag (post.image), alt: 'post image', class: 'post-image'
     .icons#icons-post
-      %svg{class: 'bi bi-chat-left show-comments', 'data-comments': "comments-post-#{post.id}", width: '28', height: '28', fill: 'currentColor', viewBox: '0 0 16 16', xmlns: 'http://www.w3.org/2000/svg'}
-        %path{d: 'M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z'}
-      - if current_user.likes.find_by(likeable_id: post.id)
-        = render partial: 'likes/unlike', locals: { likeable: post }
-      - else
-        = render partial: 'likes/like', locals: { likeable: post }
+      - if post.user == current_user && current_page?(post_path(post))
+        %button{ class: 'icon-button', "data-bs-toggle": "modal", "data-bs-target": "#staticBackdrop" }
+          %i.bi.bi-trash3
+        .modal.fade{ id: "staticBackdrop", "data-bs-backdrop": "static", "data-bs-keyboard": "false", tabindex: "-1", "aria-labelledby": "staticBackdropLabel", "aria-hidden": "true" }
+          .modal-dialog.modal-dialog-centered
+            .modal-content
+              .warning-img
+                = image_tag 'warning.png', alt: 'warning', height: '100', width: '100'
+              #body.modal-body
+                Are you sure you want to delete this post?
+              .modal-footer
+                %button.btn.btn-secondary{ type: "button", "data-bs-dismiss": "modal" } Close
+                = button_to "Delete", post_path, method: :delete, class: 'btn delete-button'
+      #like-comment
+        %button{ class: 'icon-button show-comments', 'data-comments': "comments-post-#{post.id}" }
+          %i.bi.bi-chat-left
+        - if current_user.likes.find_by(likeable_id: post.id)
+          = render partial: 'likes/unlike', locals: { likeable: post }
+        - else
+          = render partial: 'likes/like', locals: { likeable: post }
     .post-comments-container{id: "comments-post-#{post.id}"}
       .title
         .blue-box

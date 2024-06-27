@@ -24,6 +24,11 @@ class PostsController < ApplicationController
     @posts = current_user.followed_posts.ordered_by_newest
   end
 
+  def destroy
+    current_user.posts.find(params[:id])&.destroy
+    redirect_to root_path
+  end
+
   private
 
   def post_params

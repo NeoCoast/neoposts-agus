@@ -3,5 +3,5 @@
 
 = form_for(@like, remote: true, html: {id: "like-form-#{likeable.id}", class: 'like-form', method: :delete}) do |f|
   = hidden_field_tag :id, @like.id
-  = f.button type: 'submit', class: 'heart-button' do
+  = f.button type: 'submit', class: 'icon-button' do
     %i.bi.bi-heart-fill
