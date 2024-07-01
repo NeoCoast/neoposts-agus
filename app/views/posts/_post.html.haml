@@ -45,7 +45,7 @@
         .blue-box
         %h5#comments-count #{post.comments.count} Comments
         .blue-box
-        %h5#likes-count #{post.likes.count} Likes
+        %h5#likes-count #{post.likes_count} Likes
       .post-comments
         = render partial: 'comments/comment', collection: post.comments, as: :comment
       = form_for(post.comments.build, remote: true, html: {class: 'post-form'}) do |f|

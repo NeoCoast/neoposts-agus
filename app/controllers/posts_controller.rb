@@ -21,7 +21,14 @@ class PostsController < ApplicationController
   end
 
   def index
-    @posts = current_user.followed_posts.ordered_by_newest
+    sort_criteria = params[:sort_criteria] || 'publishing_date'
+
+    @posts = current_user.followed_posts.public_send("ordered_by_#{sort_criteria}")
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def destroy
