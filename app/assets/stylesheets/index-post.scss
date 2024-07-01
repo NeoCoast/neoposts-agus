@@ -59,11 +59,11 @@
     border: 1px solid $color-blue-3;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    text-decoration: underline;
 
     a {
       margin: 0 0 20px 40px;
       color: $color-blue-button;
+      text-decoration: none;
     }
   }
 
@@ -88,6 +88,28 @@
         width: 100%;
         color: $color-blue-button;
         text-decoration: none;
+      }
+
+      #trash-icon {
+        padding-right: 70px;
+
+        .warning-img {
+          display: flex;
+          justify-content: center;
+          padding-top: 30px;
+        }
+  
+        .modal-footer {
+          .button {
+            padding: 8px 13px;
+          }
+        }
+  
+        #body {
+          display: flex;
+          justify-content: center;
+          color: $color-gray-p;
+        }
       }
 
       .content {
@@ -120,65 +142,44 @@
       }
     }
 
-    #icons-post {
-      margin-bottom: 40px;
-      padding: 0 70px;
+    .info-and-comments {
+      .info {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        margin-top: 10px;
+        align-items: flex-start;
 
-      .bi-trash3 {
-        cursor: pointer;
+        .title {
+          display: flex;
+          align-items: center;
+      
+          h5 {
+            margin: 0;
+            font-size: large;
+          }
+      
+          .blue-box:nth-of-type(2) {
+            margin-left: 20px;
+          }
+        }
+
+        #title-post {
+          padding: 0 0 25px 70px;
+        }
       }
+    }
+
+    #icons-post {
+      padding-right: 70px;
 
       #like-comment {
         display: flex;
         justify-content: flex-end;
-        width: 100%;
 
         .like-form {
           margin-left: 10px;
         }
-      }
-
-      .warning-img {
-        display: flex;
-        justify-content: center;
-        padding-top: 30px;
-      }
-
-      #body {
-        display: flex;
-        justify-content: center;
-        color: $color-gray-p;
-      }
-
-      .delete-button {
-        background-color: $color-red-delete;
-        color: white;
-      }
-    }
-
-    .icons {
-      display: flex;
-
-      .bi-chat-left {
-        cursor: pointer;
-      }
-
-      .icon-button {
-        width: 28px;
-        height: 28px;
-        padding: 0;
-        border: none;
-        background-color: transparent;
-
-        ::before {
-          cursor: pointer;
-          font-size: 28px;
-          color: $color-blue-button;
-        }
-      }
-
-      .bi-heart-fill::before {
-        color: $color-red-like;
       }
     }
   }
@@ -205,33 +206,39 @@
   border-bottom-right-radius: 10px;
 }
 
+.comments-container > :first-child {
+  border-top: 1px solid $color-blue-3;
+}
 
-.post-comments-container {
+#comment-comments-container > :first-child {
+  border-top: none;
+}
+
+.comments-container {
   display: none;
   flex-flow: column;
-  padding: 40px;
-  border-top: 1px solid $color-blue-3;
-  
-  .title {
-    display: flex;
-    margin-bottom: 20px;
-    align-items: center;
 
-    h5 {
-      margin: 0;
-    }
+  .comment:first-child {
+    border-top: none;
+  }
 
-    .blue-box:nth-of-type(2) {
-      margin-left: 20px;
+  .comment:last-child {
+    .comment-info {
+      padding-bottom: 0;
     }
   }
 
   .comment {
+    border-top: 1px solid $color-blue-3;
+
+    .comment-info:first-child {
+      margin-top: 0;
+    }
+
     .comment-info{
       display: flex;
       flex-direction: row;
-      margin-top: 20px;
-      margin-bottom: 20px;
+      padding: 30px 40px;
 
       .img-container {
         margin-left: 0;
@@ -240,8 +247,17 @@
       .content {
         flex-grow: 1;
 
-        .comment-comments-container {
-          display: none;
+        #comment-comments-container {
+          padding: 0;
+          border-top: none;
+
+          .comment {
+            border-top: none;
+
+            .comment-info {
+              padding: 15px 20px;
+            }
+          }
         }
 
         .title {
@@ -253,16 +269,15 @@
           }
 
           h5 {
-            font-size: medium;
+            font-size: large;
           }
         }
       }
       
     }
 
-    .icons {
-      width: 100%;
-      margin: 10px 0 10px;
+    .icons-comment {
+      margin-right: 30px;
 
       .like-form {
         margin-left: 10px;
@@ -276,6 +291,7 @@
 
     h5 {
       white-space: nowrap;
+      font-size: large;
     }
 
     .input {
@@ -292,5 +308,27 @@
 
 .post-form {
   display: flex;
-  margin-top: 20px;
+  padding: 30px 40px;
+}
+
+.icons {
+  display: flex;
+
+  .bi-heart-fill::before {
+    color: $color-red-like;
+  }
+}
+
+.icon-button {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+
+  ::before {
+    cursor: pointer;
+    font-size: 28px;
+    color: $color-blue-button;
+  }
 }
