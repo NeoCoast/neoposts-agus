@@ -3,29 +3,11 @@
     = render 'layouts/user_profile'
   .post
     .box.all-posts#post-box
-      - if @posts.any?
-        %ul
-          %li#posts-bar
-            .dropdown
-              %button.btn.btn-secondary.dropdown-toggle{ id:'sort-button', type: 'button', 'data-bs-toggle': 'dropdown', 'aria-expanded': 'false' }
-                Sort posts
-              %ul.dropdown-menu
-                %li
-                  = form_with url: posts_path, method: :get, remote: true do
-                    = hidden_field_tag :sort_criteria, 'publishing_date'
-                    = submit_tag 'Publishing Date', class: 'dropdown-item dropdown-button'
-                %li
-                  = form_with url: posts_path, method: :get, remote: true do
-                    = hidden_field_tag :sort_criteria, 'number_of_likes'
-                    = submit_tag 'Number of likes', class: 'dropdown-item dropdown-button'
-                %li
-                  = form_with url: posts_path, method: :get, remote: true do
-                    = hidden_field_tag :sort_criteria, 'trending'
-                    = submit_tag 'Trending', class: 'dropdown-item dropdown-button'
+      %ul
+        %li#posts-bar
+          = render partial: 'posts_bar'
+        - if @posts.any?
           .posts
             = render partial: 'post', collection: @posts, as: :post
-      - else
-        .no-posts
-          = image_tag 'no_posts.png', alt: 'no posts'
-          %p No posts available
-          %p Follow some users to see their posts
+        - else
+          = render partial: 'no_posts'

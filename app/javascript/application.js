@@ -29,4 +29,13 @@ document.addEventListener("DOMContentLoaded", function() {
   toggleComments(".show-comments", "data-comments", "flex");
   toggleComments(".show-comment-form", "data-comments-comment", "block");
 
+  document.body.addEventListener('change', function(event) {
+    const selectElement = event.target;
+    if (selectElement.matches('#filter-dropdown, #sort-dropdown')) {
+      const form = selectElement.closest('form');
+      if (form) {
+        Rails.fire(form, 'submit');
+      }
+    }
+  });
 });

@@ -7,6 +7,8 @@ detectors:
     enabled: false
   UncommunicativeModuleName:
     enabled: false
+  TooManyInstanceVariables:
+    enabled: false
 
 exclude_paths:
   - "./db/migrate/*"

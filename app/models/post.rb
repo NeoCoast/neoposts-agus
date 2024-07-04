@@ -18,6 +18,23 @@ class Post < ApplicationRecord
       Arel.sql("posts.likes_count / EXP(DATE_PART('day', NOW() - posts.created_at) / 4.0) DESC")
     )
   }
+  scope :filtered_by_date, lambda { |date_criteria|
+    where('published_at >= ?', date_criteria) if date_criteria.present?
+  }
+  scope :filtered_by_text, lambda { |text_criteria|
+    if text_criteria.present?
+      joins(:user).where(
+        Arel.sql("CONCAT(users.first_name, ' ', users.last_name) ILIKE :search OR
+                  users.nickname ILIKE :search OR
+                  title ILIKE :search OR
+                  body ILIKE :search"),
+        search: "%#{text_criteria}%"
+      )
+    end
+  }
+  scope :filter_and_sort, lambda { |date_criteria, text_criteria, sort_criteria|
+    filtered_by_date(date_criteria).filtered_by_text(text_criteria).public_send("ordered_by_#{sort_criteria}")
+  }
 
   private
 
@@ -28,6 +45,6 @@ class Post < ApplicationRecord
   end
 
   def set_published_at
-    self.published_at = Time.now
+    self.published_at ||= Time.now
   end
 end

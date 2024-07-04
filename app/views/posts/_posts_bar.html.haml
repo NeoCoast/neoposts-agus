@@ -1,0 +1,8 @@
+.search-bar
+  = form_tag(posts_path, method: :get, remote: true) do
+    = text_field_tag :filter_by_text_criteria, params[:filter_by_text_criteria], placeholder: 'Filter posts by text', class: 'search-input form-control input'
+    .dropdown
+      = select_tag :filter_by_date_criteria, options_for_select([['All time', ''], ['Last day', 1.day.ago], ['Last week', 1.week.ago], ['Last month', 1.month.ago]]), id: 'filter-dropdown', class: 'btn btn-secondary dropdown-toggle'
+    .dropdown
+      = select_tag :sort_criteria, options_for_select([['Publishing date', 'publishing_date'], ['Number of likes', 'number_of_likes'], ['Trending', 'trending']]), id: 'sort-dropdown', class: 'btn btn-secondary dropdown-toggle'
+    = submit_tag 'Search'
