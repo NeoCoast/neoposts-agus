@@ -14,6 +14,47 @@
     }
   }
 
+  li#posts-bar {
+    background-color: $color-blue-2;
+    padding-top: 0;
+    height: 11vh;
+    border: 1px solid $color-blue-3;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    display: flex;
+    justify-content: center;
+
+    .dropdown {
+      display: flex;
+      justify-content: flex-end;
+      margin-right: 50px;
+
+      #sort-button {
+        background-color: $color-blue-3;
+        border: none;
+        height: 45px;
+      }
+
+      .dropdown-button {
+        --bs-dropdown-link-active-color: #f8f9fa;;
+        --bs-dropdown-link-active-bg: #f8f9fa;;
+        color: $color-blue-button;
+      }
+
+      .dropdown-menu {
+        width: 165px;
+        border:  1px solid $color-blue-3;
+        padding: 10px 0px;
+
+        li {
+          border-top: none;
+          padding: 0;
+          margin: 0;
+        }
+      }
+    }
+  }
+
   li#back {
     border: 1px solid $color-blue-3;
     border-top-left-radius: 10px;
@@ -157,12 +198,6 @@
       color: #575757;
     }
   }
-}
-
-#post-box.box.all-posts ul li:first-child {
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  border-top: 1px solid $color-blue-3;
 }
 
 #post-box ul li:last-child {

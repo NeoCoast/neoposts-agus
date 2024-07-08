@@ -106,10 +106,6 @@ RSpec.describe 'Posts', type: :request do
   end
 
   describe 'GET /index' do
-    let(:new_follow_relationship) { create(:follow_relationship) }
-    let!(:followed_posts) { create_list(:post, 2, user: new_follow_relationship.followed) }
-    let!(:unfollowed_post) { create(:post) }
-
     context 'when the user is not logged in' do
       before { get posts_path }
 
@@ -117,35 +113,87 @@ RSpec.describe 'Posts', type: :request do
     end
 
     context 'when the user is logged in' do
-      before do
-        sign_in new_follow_relationship.follower
-        get posts_path
+      let(:new_follow_relationship) { create(:follow_relationship) }
+      before { sign_in new_follow_relationship.follower }
+
+      context 'when no sorting criteria is set' do
+        let!(:followed_posts) { create_list(:post, 2, user: new_follow_relationship.followed) }
+        let!(:unfollowed_post) { create(:post) }
+        before { get posts_path }
+
+        it 'renders a successful response' do
+          expect(response).to be_successful
+        end
+
+        it 'should display the posts of the followed users' do
+          expect(response.body).to include(CGI.escapeHTML(followed_posts[0].user.nickname))
+        end
+
+        it 'should not display the posts of the unfollowed users' do
+          expect(response.body).not_to include(CGI.escapeHTML(unfollowed_post.user.nickname))
+        end
+
+        it 'includes the first post of followed user' do
+          expect(response.body).to include(CGI.escapeHTML(followed_posts[0].title))
+        end
+
+        it 'includes the second post of followed user' do
+          expect(response.body).to include(CGI.escapeHTML(followed_posts[1].title))
+        end
+
+        it 'returns posts ordered by newest' do
+          posts = controller.instance_variable_get('@posts')
+          expect(posts.first.title).to eq(followed_posts[1].title) # newest first
+          expect(posts.second.title).to eq(followed_posts[0].title)
+        end
       end
 
-      it 'renders a successful response' do
-        expect(response).to be_successful
+      context 'when sorting by number of likes' do
+        let!(:post_a) { create(:post, user: new_follow_relationship.followed, likes_count: 0) }
+        let!(:post_b) { create(:post, user: new_follow_relationship.followed, likes_count: 1) }
+        before { get posts_path, params: { sort_criteria: 'number_of_likes' }, xhr: true }
+
+        it 'returns posts ordered by number of likes' do
+          posts = controller.instance_variable_get('@posts')
+          expect(posts.first.title).to eq(post_b.title) # most liked first
+          expect(posts.second.title).to eq(post_a.title)
+        end
       end
 
-      it 'should display the posts of the followed users' do
-        expect(response.body).to include(CGI.escapeHTML(followed_posts[0].user.nickname))
-      end
+      context 'when sorting by trending value' do
+        context 'when one post has more days since creation than the other' do
+          let!(:post_a) do
+            create(:post, user: new_follow_relationship.followed, likes_count: 10, created_at: 20.days.ago)
+          end
+          # more trendy post
+          let!(:post_b) do
+            create(:post, user: new_follow_relationship.followed, likes_count: 10, created_at: 10.days.ago)
+          end
+          before { get posts_path, params: { sort_criteria: 'trending' }, xhr: true }
 
-      it 'should not display the posts of the unfollowed users' do
-        expect(response.body).not_to include(CGI.escapeHTML(unfollowed_post.user.nickname))
-      end
+          it 'returns posts ordered by trending value' do
+            posts = controller.instance_variable_get('@posts')
+            expect(posts.first.title).to eq(post_b.title) # most trending first
+            expect(posts.second.title).to eq(post_a.title)
+          end
+        end
 
-      it 'includes the first post of followed user' do
-        expect(response.body).to include(CGI.escapeHTML(followed_posts[0].title))
-      end
+        context 'when one post has more likes than the other' do
+          # more trendy post
+          let!(:post_a) do
+            create(:post, user: new_follow_relationship.followed, likes_count: 20, created_at: 10.days.ago)
+          end
+          let!(:post_b) do
+            create(:post, user: new_follow_relationship.followed, likes_count: 10, created_at: 10.days.ago)
+          end
+          before { get posts_path, params: { sort_criteria: 'trending' }, xhr: true }
 
-      it 'includes the second post of followed user' do
-        expect(response.body).to include(CGI.escapeHTML(followed_posts[1].title))
-      end
-
-      it 'returns posts ordered by newest' do
-        posts = controller.instance_variable_get('@posts')
-        expect(posts.first.title).to eq(followed_posts[1].title) # newest first
-        expect(posts.second.title).to eq(followed_posts[0].title)
+          it 'returns posts ordered by trending value' do
+            posts = controller.instance_variable_get('@posts')
+            expect(posts.first.title).to eq(post_a.title) # most trending first
+            expect(posts.second.title).to eq(post_b.title)
+          end
+        end
       end
     end
   end

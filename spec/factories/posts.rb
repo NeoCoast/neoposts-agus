@@ -5,6 +5,7 @@ FactoryBot.define do
     title { Faker::Book.title }
     body { Faker::Quote.matz }
     published_at { Faker::Date.in_date_period }
+    likes_count { 0 }
     user
 
     trait :invalid do
