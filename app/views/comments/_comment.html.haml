@@ -11,24 +11,28 @@
         %span.name #{@user.first_name} #{@user.last_name}
         @#{@user.nickname}
       .p #{comment.content}
-      .icons
-        %button{ class: 'icon-button show-comment-form', 'data-comments-comment': "comments-comment-#{comment.id}" }
-          %i.bi.bi-chat-left
-        - if current_user.likes.find_by(likeable_id: comment.id)
-          = render partial: 'likes/unlike', locals: { likeable: comment }
-        - else
-          = render partial: 'likes/like', locals: { likeable: comment }
-      .comment-comments-container{id: "comments-comment-#{comment.id}"}
-        .title
-          .blue-box
-          %h5{id: "comments-count-#{comment.id}"} #{comment.comments.count} Comments
-          .blue-box
-          %h5{id: "likes-count-#{comment.id}"} #{comment.likes_count} Likes
-        .comment-comments
-          = render partial: 'comments/comment', collection: comment.comments, as: :comment
-        = form_for(comment.comments.build, remote: true, html: {class: 'comment-form'}) do |f|
-          %h5 Reply
-          = hidden_field_tag :commentable_id, comment.id
-          = hidden_field_tag :commentable_type, 'Comment'
-          = f.text_field :content, class: 'input', required: true
-          = f.submit 'Comment', class: 'button no-fill-button'
+      .info-and-comments{id: "comments-comment-#{comment.id}"}
+        .info
+          .title
+            .blue-box
+            %h5{id: "comments-count-#{comment.id}"}
+              = pluralize(comment.comments.count, 'Comment')
+            .blue-box
+            %h5{id: "likes-count-#{comment.id}"}
+              = pluralize(comment.likes_count, 'Like')
+          .icons.icons-comment
+            %button{ class: 'icon-button show-comment-form', 'data-comments-comment': "comments-comment-#{comment.id}" }
+              %i.bi.bi-chat-left
+            - if current_user.likes.find_by(likeable_id: comment.id)
+              = render partial: 'likes/unlike', locals: { likeable: comment }
+            - else
+              = render partial: 'likes/like', locals: { likeable: comment }
+        .comments-container#comment-comments-container
+          .comment-comments
+            = render partial: 'comments/comment', collection: comment.comments, as: :comment
+          = form_for(comment.comments.build, remote: true, html: {class: 'comment-form'}) do |f|
+            %h5 Reply
+            = hidden_field_tag :commentable_id, comment.id
+            = hidden_field_tag :commentable_type, 'Comment'
+            = f.text_field :content, class: 'input', required: true
+            = f.submit 'Comment', class: 'button no-fill-button'

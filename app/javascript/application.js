@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function() {
       if (event.target.closest(selector)) {
         var icon = event.target.closest(selector);
         var id = icon.getAttribute(dataAttribute);
-        var comments = document.getElementById(id);
+        var comments = document.querySelector(`#${id} .comments-container`);
 
         if (comments.style.display === "none" || comments.style.display === "") {
           comments.style.display = displayStyle;
@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
-  toggleComments(".show-comments", "data-comments", "flex");
+  toggleComments(".show-comments", "data-comments", "block");
   toggleComments(".show-comment-form", "data-comments-comment", "block");
 
 });
