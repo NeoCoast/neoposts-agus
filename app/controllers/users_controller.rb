@@ -14,7 +14,6 @@ class UsersController < ApplicationController
 
   def update
     if @user.update_with_password(user_params)
-      bypass_sign_in @user
       redirect_to user_profile_path(@user.nickname)
     else
       render :edit, status: :unprocessable_entity

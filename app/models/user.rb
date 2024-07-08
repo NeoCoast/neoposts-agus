@@ -3,9 +3,11 @@
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+  include DeviseTokenAuth::Concerns::User
 
   validates :nickname, :first_name, :last_name, :birthday, presence: true
   validates :nickname, uniqueness: { case_sensitive: false }
+  validates :email, presence: true, uniqueness: { case_sensitive: false, scope: :provider }
   validate :validate_image_type
 
   has_one_attached :profile_picture
