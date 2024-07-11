@@ -117,7 +117,8 @@ RSpec.describe 'Posts', type: :request do
       before { sign_in new_follow_relationship.follower }
 
       context 'when no sorting criteria is set' do
-        let!(:followed_posts) { create_list(:post, 2, user: new_follow_relationship.followed) }
+        let!(:followed_post_a) { create(:post, user: new_follow_relationship.followed, published_at: 1.day.ago) }
+        let!(:followed_post_b) { create(:post, user: new_follow_relationship.followed, published_at: 1.week.ago) }
         let!(:unfollowed_post) { create(:post) }
         before { get posts_path }
 
@@ -126,7 +127,7 @@ RSpec.describe 'Posts', type: :request do
         end
 
         it 'should display the posts of the followed users' do
-          expect(response.body).to include(CGI.escapeHTML(followed_posts[0].user.nickname))
+          expect(response.body).to include(CGI.escapeHTML(followed_post_a.user.nickname))
         end
 
         it 'should not display the posts of the unfollowed users' do
@@ -134,17 +135,17 @@ RSpec.describe 'Posts', type: :request do
         end
 
         it 'includes the first post of followed user' do
-          expect(response.body).to include(CGI.escapeHTML(followed_posts[0].title))
+          expect(response.body).to include(CGI.escapeHTML(followed_post_a.title))
         end
 
         it 'includes the second post of followed user' do
-          expect(response.body).to include(CGI.escapeHTML(followed_posts[1].title))
+          expect(response.body).to include(CGI.escapeHTML(followed_post_b.title))
         end
 
         it 'returns posts ordered by newest' do
           posts = controller.instance_variable_get('@posts')
-          expect(posts.first.title).to eq(followed_posts[1].title) # newest first
-          expect(posts.second.title).to eq(followed_posts[0].title)
+          expect(posts.first.title).to eq(followed_post_a.title) # newest first
+          expect(posts.second.title).to eq(followed_post_b.title)
         end
       end
 
@@ -193,6 +194,177 @@ RSpec.describe 'Posts', type: :request do
             expect(posts.first.title).to eq(post_a.title) # most trending first
             expect(posts.second.title).to eq(post_b.title)
           end
+        end
+      end
+
+      context 'when filtering by date' do
+        let!(:post_a) { create(:post, user: new_follow_relationship.followed, published_at: 1.day.ago) }
+        let!(:post_b) { create(:post, user: new_follow_relationship.followed, published_at: 1.week.ago) }
+        let!(:post_c) { create(:post, user: new_follow_relationship.followed, published_at: 1.month.ago) }
+
+        context 'when filtering by last day' do
+          before { get posts_path, params: { filter_by_date_criteria: 1.day.ago }, xhr: true }
+
+          it 'returns posts published on the last day' do
+            posts = controller.instance_variable_get('@posts')
+            expect(posts.first.title).to eq(post_a.title)
+          end
+
+          it 'does not return posts published before the last day' do
+            posts = controller.instance_variable_get('@posts')
+            expect(posts.length).to eq(1)
+          end
+        end
+
+        context 'when filtering by last week' do
+          before { get posts_path, params: { filter_by_date_criteria: 1.week.ago }, xhr: true }
+
+          it 'returns posts published on the last week' do
+            posts = controller.instance_variable_get('@posts')
+            expect(posts.second.title).to eq(post_b.title)
+          end
+
+          it 'returns posts published on the last day' do
+            posts = controller.instance_variable_get('@posts')
+            expect(posts.first.title).to eq(post_a.title)
+          end
+
+          it 'does not return posts published before the last week' do
+            posts = controller.instance_variable_get('@posts')
+            expect(posts.length).to eq(2)
+          end
+        end
+
+        context 'when filtering by last month' do
+          before { get posts_path, params: { filter_by_date_criteria: 1.month.ago }, xhr: true }
+
+          it 'returns posts published on the last month' do
+            posts = controller.instance_variable_get('@posts')
+            expect(posts.third.title).to eq(post_c.title)
+          end
+
+          it 'returns posts published on the last week' do
+            posts = controller.instance_variable_get('@posts')
+            expect(posts.second.title).to eq(post_b.title)
+          end
+
+          it 'returns posts published on the last day' do
+            posts = controller.instance_variable_get('@posts')
+            expect(posts.first.title).to eq(post_a.title)
+          end
+        end
+      end
+
+      context 'when filtering by text' do
+        let!(:post_a) do
+          create(:post, user: new_follow_relationship.followed, published_at: 1.day.ago, title: 'Title Post a',
+                        body: 'Body Post a')
+        end
+        let!(:post_b) do
+          create(:post, user: new_follow_relationship.followed, published_at: 1.week.ago, title: 'Title Post b',
+                        body: 'Body Post b')
+        end
+        let!(:post_c) do
+          create(:post, user: new_follow_relationship.followed, published_at: 1.month.ago, title: 'Title Post c',
+                        body: 'Body Post c')
+        end
+
+        context "when the text is included in author's first_name" do
+          before { get posts_path, params: { filter_by_text_criteria: post_a.user.first_name[1..-2] }, xhr: true }
+
+          it 'returns posts which include the text' do
+            posts = controller.instance_variable_get('@posts')
+            expect(posts.first.title).to eq(post_a.title)
+          end
+        end
+
+        context "when the text is included in author's last_name" do
+          before { get posts_path, params: { filter_by_text_criteria: post_a.user.last_name[1..-2] }, xhr: true }
+
+          it 'returns posts which include the text' do
+            posts = controller.instance_variable_get('@posts')
+            expect(posts.first.title).to eq(post_a.title)
+          end
+        end
+
+        context "when the text is included in author's nickname" do
+          before { get posts_path, params: { filter_by_text_criteria: post_a.user.nickname[1..-2] }, xhr: true }
+
+          it 'returns posts which include the text' do
+            posts = controller.instance_variable_get('@posts')
+            expect(posts.first.title).to eq(post_a.title)
+          end
+        end
+
+        context 'when the text is included in the title of a post' do
+          before { get posts_path, params: { filter_by_text_criteria: 'Title Post b' }, xhr: true }
+
+          it 'returns posts which include the text' do
+            posts = controller.instance_variable_get('@posts')
+            expect(posts.first.title).to eq(post_b.title)
+          end
+
+          it "does not return posts which don't include the text" do
+            posts = controller.instance_variable_get('@posts')
+            expect(posts.length).to eq(1)
+          end
+        end
+
+        context 'when the text is included in the body of a post' do
+          before { get posts_path, params: { filter_by_text_criteria: 'Body Post c' }, xhr: true }
+
+          it 'returns posts which include the text' do
+            posts = controller.instance_variable_get('@posts')
+            expect(posts.first.title).to eq(post_c.title)
+          end
+
+          it "does not return posts which don't include the text" do
+            posts = controller.instance_variable_get('@posts')
+            expect(posts.length).to eq(1)
+          end
+        end
+      end
+
+      context 'when filtering by date, filtering by text and sorting at the same time' do
+        let!(:post_a) do
+          create(:post, user: new_follow_relationship.followed, published_at: 1.day.ago, likes_count: 0, title: 'Title')
+        end
+        let!(:post_b) do
+          create(:post, user: new_follow_relationship.followed, published_at: 1.week.ago, likes_count: 1,
+                        title: 'Title')
+        end
+        let!(:post_c) do
+          create(:post, user: new_follow_relationship.followed, published_at: 1.month.ago, likes_count: 2)
+        end
+
+        before do
+          get posts_path,
+              params: { filter_by_date_criteria: 1.week.ago,
+                        filter_by_text_criteria: 'Title',
+                        sort_criteria: 'number_of_likes' }, xhr: true
+        end
+
+        it 'returns posts published on the last week' do
+          posts = controller.instance_variable_get('@posts')
+          expect(posts.first.title).to eq(post_b.title)
+          expect(posts.second.title).to eq(post_a.title)
+        end
+
+        it 'does not return posts published before the last week' do
+          posts = controller.instance_variable_get('@posts')
+          expect(posts.length).to eq(2)
+        end
+
+        it 'returns posts which include the text' do
+          posts = controller.instance_variable_get('@posts')
+          expect(posts.first.title).to eq(post_b.title)
+          expect(posts.second.title).to eq(post_a.title)
+        end
+
+        it 'returns posts ordered by number of likes' do
+          posts = controller.instance_variable_get('@posts')
+          expect(posts.first.title).to eq(post_b.title) # most liked first
+          expect(posts.second.title).to eq(post_a.title)
         end
       end
     end

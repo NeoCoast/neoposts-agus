@@ -21,9 +21,9 @@ class PostsController < ApplicationController
   end
 
   def index
-    sort_criteria = params[:sort_criteria] || 'publishing_date'
-
-    @posts = current_user.followed_posts.public_send("ordered_by_#{sort_criteria}")
+    @posts = current_user.followed_posts.filter_and_sort(params[:filter_by_date_criteria],
+                                                         params[:filter_by_text_criteria],
+                                                         params[:sort_criteria] || 'publishing_date')
 
     respond_to do |format|
       format.html
