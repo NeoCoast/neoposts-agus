@@ -1,0 +1,88 @@
+# frozen_string_literal: true
+
+require 'rails_helper'
+
+RSpec.describe 'Api::V1::Posts', type: :request do
+  describe 'GET /index' do
+    let(:new_user) { create(:user) }
+
+    context 'when the user is not logged in' do
+      before { get api_v1_user_posts_path(new_user.id) }
+
+      it 'returns 401 Unauthorized' do
+        expect(response.status).to eq(401)
+      end
+
+      it 'indicates authentication is required' do
+        expect(response.body).to include(CGI.escapeHTML('You need to sign in or sign up before continuing.'))
+      end
+
+      it 'returns a json response' do
+        expect(response.content_type).to eq 'application/json; charset=utf-8'
+      end
+    end
+
+    context 'when the user is logged in' do
+      let!(:posts_list) { create_list(:post, 2, user: new_user) }
+      let(:client) do
+        post api_user_session_path, params: { email: new_user.email, password: new_user.password }.to_json,
+                                    headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+        request.headers['client']
+      end
+      let(:new_auth_header) { new_user.create_new_auth_token(client) }
+
+      context 'when the user in the request exist' do
+        before do
+          get api_v1_user_posts_path(new_user.id), headers: new_auth_header
+        end
+
+        it 'renders a successful response' do
+          expect(response).to be_successful
+        end
+
+        it 'returns a json response' do
+          expect(response.content_type).to eq 'application/json; charset=utf-8'
+        end
+
+        it "returns all user's posts" do
+          json_response = JSON.parse(response.body)
+          expect(json_response.size).to eq(2)
+        end
+
+        it 'includes post 1' do
+          expect(response.body).to include(posts_list[0].title)
+        end
+
+        it 'includes post 2' do
+          expect(response.body).to include(posts_list[1].title)
+        end
+
+        it 'contains expected attributes in the JSON response' do
+          json_response = JSON.parse(response.body)
+          expect(json_response.first.keys).to match_array(%w[id title body published_at user_id
+                                                             likes_count comments_count])
+        end
+      end
+
+      context 'when the user in the request does not exist' do
+        before do
+          get api_v1_user_posts_path(0), headers: new_auth_header
+        end
+
+        it 'returns 404 not found' do
+          expect(response).to have_http_status(:not_found)
+        end
+
+        it 'returns a json response' do
+          expect(response.content_type).to eq 'application/json; charset=utf-8'
+        end
+
+        it 'returns a not found error message' do
+          json_response = JSON.parse(response.body)
+          expect(json_response).to have_key('error')
+          expect(json_response['error']).to eq('User not found.')
+        end
+      end
+    end
+  end
+end
