@@ -28,6 +28,7 @@ Rails.application.routes.draw do
       resources :users, only: [:index] do
         resources :posts, only: [:index]
       end
+      resources :posts, only: [:show]
     end
   end
 end

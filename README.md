@@ -121,3 +121,78 @@ Returns all posts of a given user. This endpoint is accessible only to authentic
     "error": "User not found."
 }
 ```
+
+## Get Post Details Endpoint
+
+### Endpoint
+`GET /api/v1/posts/:id`
+
+### Description
+Returns the details of a post. This endpoint is accessible only to authenticated users.
+
+### Request
+* **URL:** `/api/v1/posts/:id`
+* **Method:** `GET`
+  * `Content-Type: application/json`
+  * `Accept: application/json`
+  * `access-token: <ACCESS_TOKEN>`
+  * `client: <CLIENT>`
+  * `uid: <UID>`
+* **Authentication Required:** Yes
+
+### Parameters
+* `id` (path parameter): The ID of the post to retrieve details for.
+
+### Response
+#### Success Response
+* **Code:** 200 OK
+* **Content:** It renders the post with its ID, title, body, publishing date, user's ID, likes, and comments (including their replies), in a JSON format:
+```json
+{
+    "id": 1,
+    "title": "Post Title",
+    "body": "Post Body",
+    "published_at": "2024-06-28T17:09:37.798Z",
+    "user_id": 1,
+    "likes": [
+        {
+            "user_id": 2,
+            "nickname": "user2"
+        }
+    ],
+    "comments": [
+        {
+            "id": 1,
+            "content": "One Comment",
+            "replies": [
+                {
+                    "id": 2,
+                    "content": "Reply to the comment"
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "content": "Another Comment",
+            "replies": []
+        }
+    ]
+}
+```
+
+#### Error Responses
+* **Code:** 401 Unauthorized (returned if the user is not authenticated)
+* **Content:** It renders the following error:
+```json
+{
+  "errors": ["You need to sign in or sign up before continuing."]
+}
+```
+
+* **Code:** 404 Not Found (returned if the post does not exist)
+* **Content:** It renders the following error:
+```json
+{
+    "error": "Post not found."
+}
+```
