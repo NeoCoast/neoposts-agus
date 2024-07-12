@@ -10,6 +10,8 @@ FactoryBot.define do
     last_name  { Faker::Name.last_name }
     nickname { Faker::Name.first_name }
     birthday { Faker::Date.birthday }
+    provider { 'email' }
+    uid { email }
 
     trait :invalid do
       email { '' }
