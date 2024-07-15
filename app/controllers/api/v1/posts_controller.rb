@@ -21,6 +21,15 @@ module Api
         end
       end
 
+      def update
+        @post = Post.find(params[:id])
+        if @post.user.id == current_user.id
+          @post.update(post_params)
+        else
+          render json: { errors: ['You are not authorized to update this post.'] }, status: :forbidden
+        end
+      end
+
       private
 
       def post_params

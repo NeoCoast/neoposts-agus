@@ -279,4 +279,90 @@ RSpec.describe 'Api::V1::Posts', type: :request do
       end
     end
   end
+
+  describe 'PATCH /update' do
+    let!(:new_user) { create(:user) }
+    let!(:new_post) { create(:post, user: new_user) }
+    let!(:params) { { title: 'Edited Title', body: 'Edited Body' } }
+
+    context 'when the user is not logged in' do
+      before { patch api_v1_post_path(new_post.id), params: }
+
+      it 'returns 401 Unauthorized' do
+        expect(response.status).to eq(401)
+      end
+
+      it 'indicates authentication is required' do
+        expect(response.body).to include(CGI.escapeHTML('You need to sign in or sign up before continuing.'))
+      end
+
+      it 'returns a json response' do
+        expect(response.content_type).to eq 'application/json; charset=utf-8'
+      end
+    end
+
+    context 'when the user is logged in' do
+      let(:client) do
+        post api_user_session_path, params: { email: new_user.email, password: new_user.password }.to_json,
+                                    headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+        request.headers['client']
+      end
+      let(:new_auth_header) { new_user.create_new_auth_token(client) }
+
+      context 'when the post does not exist' do
+        before { patch api_v1_post_path(0), headers: new_auth_header, params: }
+
+        it 'returns 404 Not Found' do
+          expect(response).to have_http_status(:not_found)
+        end
+
+        it 'returns a json response' do
+          expect(response.content_type).to eq 'application/json; charset=utf-8'
+        end
+
+        it 'returns a not found error message' do
+          json_response = JSON.parse(response.body)
+          expect(json_response).to have_key('error')
+          expect(json_response['error']).to eq('Post not found.')
+        end
+      end
+
+      context 'when the post belongs to the logged user' do
+        before { patch api_v1_post_path(new_post.id), headers: new_auth_header, params: }
+
+        it 'renders a successful response' do
+          expect(response).to be_successful
+        end
+
+        it 'returns a json response' do
+          expect(response.content_type).to eq 'application/json; charset=utf-8'
+        end
+
+        it 'contains expected attributes in the JSON response' do
+          json_response = JSON.parse(response.body)
+          expect(json_response.keys).to match_array(%w[id title body published_at user_id likes_count comments_count])
+        end
+      end
+
+      context 'when the post does not belong to the logged user' do
+        let(:new_post2) { create(:post) }
+
+        before { patch api_v1_post_path(new_post2.id), headers: new_auth_header, params: }
+
+        it 'returns 403 Forbidden' do
+          expect(response).to have_http_status(:forbidden)
+        end
+
+        it 'returns a json response' do
+          expect(response.content_type).to eq 'application/json; charset=utf-8'
+        end
+
+        it 'returns a forbidden error message' do
+          json_response = JSON.parse(response.body)
+          expect(json_response).to have_key('errors')
+          expect(json_response['errors']).to eq(['You are not authorized to update this post.'])
+        end
+      end
+    end
+  end
 end

@@ -274,3 +274,70 @@ Creates a new post for a given user. This endpoint is accessible only to authent
     ]
 }
 ```
+
+## Edit Post Endpoint
+
+### Endpoint
+`PUT /api/v1/posts/:id`
+
+`PATCH /api/v1/posts/:id`
+
+### Description
+Updates a post's title and content. This endpoint is accessible only to authenticated users.
+
+### Request
+* **URL:** `/api/v1/posts/:id`
+* **Methods:** `PUT` and `PATCH`
+* **Headers:**
+  * `Content-Type: application/json`
+  * `Accept: application/json`
+  * `access-token: <ACCESS_TOKEN>`
+  * `client: <CLIENT>`
+  * `uid: <UID>`
+* **Authentication Required:** Yes
+
+### Parameters
+* `id` (path parameter): The ID of the post to be updated.
+
+### Response
+#### Success Response
+* **Code:** 200 OK
+* **Content:** It renders the updated post info including its ID, title, body, publishing date, user ID, like count, and comment count in a JSON format:
+```json
+{
+    "id": 1,
+    "title": "Edited Title",
+    "body": "Edited Body",
+    "published_at": "2024-06-26T19:30:28.945Z",
+    "user_id": 1,
+    "likes_count": 5,
+    "comments_count": 0
+}
+```
+
+#### Error Responses
+* **Code:** 401 Unauthorized (returned if the user is not authenticated)
+* **Content:** It renders the following error:
+```json
+{
+  "errors": ["You need to sign in or sign up before continuing."]
+}
+```
+
+* **Code:** 404 Not Found (returned if the post does not exist)
+* **Content:** It renders the following error:
+```json
+{
+    "error": "Post not found."
+}
+```
+**Code:** 403 Forbidden (returned if the post does not belong to de logged user)
+* **Content:** It renders the following error:
+
+```json
+{
+    "errors": [
+        "You are not authorized to update this post."
+    ]
+}
+```
