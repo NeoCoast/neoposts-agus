@@ -26,7 +26,7 @@ Rails.application.routes.draw do
 
     namespace :v1 do
       resources :users, only: [:index] do
-        resources :posts, only: [:index]
+        resources :posts, only: %i[index create]
       end
       resources :posts, only: [:show]
     end
