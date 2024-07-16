@@ -196,3 +196,81 @@ Returns the details of a post. This endpoint is accessible only to authenticated
     "error": "Post not found."
 }
 ```
+
+## Create a Post Endpoint
+
+### Endpoint
+`POST /api/v1/users/:user_id/posts`
+
+### Description
+Creates a new post for a given user. This endpoint is accessible only to authenticated users.
+
+### Request
+* **URL:** `/api/v1/users/:user_id/posts`
+* **Method:** `POST`
+* **Headers:**
+  * `Content-Type: application/json`
+  * `Accept: application/json`
+  * `access-token: <ACCESS_TOKEN>`
+  * `client: <CLIENT>`
+  * `uid: <UID>`
+* **Authentication Required:** Yes
+
+### Parameters
+* `user_id` (path parameter): The ID of the user for whom the post will be created.
+
+### Response
+#### Success Response
+* **Code:** 200 OK
+* **Content:** It renders the new post data including its ID, title, body, publishing date, user ID, likes count and comment counts in a JSON format:
+```json
+{
+    "id": 1,
+    "title": "New Post Title",
+    "body": "New Post Body",
+    "published_at": "2024-07-12T19:04:14.671Z",
+    "user_id": 1,
+    "likes_count": 0,
+    "comments_count": 0
+}
+```
+
+#### Error Responses
+* **Code:** 401 Unauthorized (returned if the user is not authenticated)
+* **Content:** It renders the following error:
+```json
+{
+  "errors": ["You need to sign in or sign up before continuing."]
+}
+```
+
+* **Code:** 404 Not Found (returned if the user does not exist)
+* **Content:** It renders the following error:
+```json
+{
+    "error": "User not found."
+}
+```
+
+* **Code:** 422 Unprocessable Content (returned if any validation fails)
+* **Content:** It renders the following errors:
+
+```json
+{
+    "errors": [
+        "Title can't be blank",
+        "Body can't be blank"
+    ]
+}
+```
+
+* **Code:** 403 Forbidden (returned when attempting to create a post for another user)
+* **Content:** It renders the following error:
+
+```json
+{
+    "errors": [
+        "You can only create a post for yourself."
+    ]
+}
+```
