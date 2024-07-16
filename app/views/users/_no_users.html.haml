@@ -1,0 +1,7 @@
+.no-users
+  = image_tag 'no_users.png', alt: 'no users'
+  %p It's a bit quiet here...
+  - if relationship == 'followers'
+    %p No followers at the moment
+  - else
+    %p Not following anyone at the moment

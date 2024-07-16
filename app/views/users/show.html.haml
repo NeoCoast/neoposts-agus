@@ -17,30 +17,40 @@
               %span.name
                 = @user.full_name
               %span.account @#{@user.nickname}
-              = render 'follow_relationships/follow_form'
+              = render 'follow_relationships/follow_form', user: @user
             .dates
               .blue-box
               %span Born #{@user.birthday.strftime('%m/%d/%Y')}
               .blue-box
               %span Joined #{@user.created_at.strftime('%m/%d/%Y')}
-          - if @user == current_user
+          - if @user.id == current_user.id
             .edit-profile
               = link_to 'Edit Profile', edit_user_path(id: @user.id), class: 'button no-fill-button'
         %nav
           #nav-tab{class: 'nav nav-tabs justify-content-center', role: 'tablist'}
             %button{class: 'nav-link active', id: 'nav-posts-tab', 'data-bs-toggle': 'tab', 'data-bs-target': '#nav-posts', role: 'tab', 'aria-controls': 'nav-posts', 'aria-selected': 'true'}
-              %p #{@user.posts.count.to_s}
-              Posts
+              %p #{@user.posts.count}
+              = @user.posts.many? ? 'Posts' : 'Post'
             %button{class: 'nav-link', id: 'nav-following-tab', 'data-bs-toggle': 'tab', 'data-bs-target': '#nav-following', role: 'tab', 'aria-controls': 'nav-following', 'aria-selected': 'false'}
               %p #{@user.following.count}
               Following
             %button{class: 'nav-link', id: 'nav-followers-tab', 'data-bs-toggle': 'tab', 'data-bs-target': '#nav-followers', role: 'tab', 'aria-controls': 'nav-followers', 'aria-selected': 'false'}
               %p #{@user.followers.count}
-              Followers
+              #followers-count
+                = @user.followers.many? ? 'Followers' : 'Follower'
           #nav-tabContent{class: 'tab-content'}
             .tab-pane.fade.show.active{ id: 'nav-posts', role: 'tabpanel', 'aria-labelledby': 'nav-posts-tab'}
-              = render partial: 'posts/post', collection: @posts, as: :post
+              - if @posts.any?
+                = render partial: 'posts/post', collection: @posts, as: :post
+              - else
+                = render partial: 'posts/no_posts'
             .tab-pane.fade{ id: 'nav-following', role: 'tabpanel', 'aria-labelledby': 'nav-following-tab'}
-              = render partial: 'user', collection: @user.following, as: :user
+              - if @user.following.any?
+                = render partial: 'user', collection: @user.following, as: :user
+              - else
+                = render partial: 'users/no_users', locals: { relationship: "following" }
             .tab-pane.fade{ id: 'nav-followers', role: 'tabpanel', 'aria-labelledby': 'nav-followers-tab'}
-              = render partial: 'user', collection: @user.followers, as: :user
+              - if @user.followers.any?
+                = render partial: 'user', collection: @user.followers, as: :user
+              - else
+                = render partial: 'users/no_users', locals: { relationship: "followers" }
