@@ -43,8 +43,9 @@
     
           .dropdown-toggle {
             background-color: $color-blue-3;
-            border: none;
             height: 45px;
+            border-right-width: 10px;
+            border-color: transparent;
           }
     
           #filter-dropdown {

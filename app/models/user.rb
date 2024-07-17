@@ -34,8 +34,8 @@ class User < ApplicationRecord
 
   scope :search, lambda { |query|
     if query.present?
-      where('LOWER(nickname) LIKE :query OR LOWER(first_name) LIKE :query OR LOWER(last_name) LIKE :query',
-            query: "%#{query.downcase}%").ordered_by_first_name
+      where("CONCAT(users.first_name, ' ', users.last_name) ILIKE :query OR users.nickname ILIKE :query",
+            query: "%#{query}%").ordered_by_first_name
     else
       all.ordered_by_first_name
     end

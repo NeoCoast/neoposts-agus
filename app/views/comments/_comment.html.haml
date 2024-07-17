@@ -1,15 +1,15 @@
 .comment
   .comment-info
-    - @user = User.find(comment.user_id)
+    - user = User.find(comment.user_id)
     .img-container.small
-      - if @user.profile_picture.attached?
-        = image_tag (@user.profile_picture), alt: 'profile picture', class: 'profile-picture'
+      - if user.profile_picture.attached?
+        = image_tag (user.profile_picture), alt: 'profile picture', class: 'profile-picture'
       - else
         = image_tag 'no_profile_picture.png', alt: 'no profile picture', class: 'profile-picture'
     .content
       .p
-        %span.name #{@user.first_name} #{@user.last_name}
-        @#{@user.nickname}
+        %span.name #{user.first_name} #{user.last_name}
+        @#{user.nickname}
       .p #{comment.content}
       .info-and-comments{id: "comments-comment-#{comment.id}"}
         .info

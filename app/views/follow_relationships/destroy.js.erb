@@ -1,4 +1,19 @@
-$("#follow_form").html("<%= escape_javascript(render('follow_relationships/follow')) %>");
-$("#nav-followers-tab p").html('<%= escape_javascript("#{@user.followers.count}") %>');
+$("#follow_form_<%= @user.id %>").html("<%= escape_javascript(render 'follow_relationships/follow', user: @user) %>");
 $("#following.p").html('<%= escape_javascript("Following: #{current_user.following.count}") %>');
-$("#nav-followers").html('<%= escape_javascript(render(partial: 'users/user', collection: @user.followers, as: :user)) %>');
+
+var userProfilePath = "<%= "/#{@user.nickname}" %>";
+if (window.location.pathname === userProfilePath) {
+  $("#nav-followers-tab p").html('<%= escape_javascript("#{@user.followers.count}") %>');
+  $("#nav-followers-tab #followers-count").html('<%= @user.followers.count == 1 ? "Follower" : "Followers" %>');
+  $("#nav-followers").html('<%= escape_javascript(render(partial: 'users/user', collection: @user.followers, as: :user)) %>');
+  <% if !@user.followers.any? %>
+    $("#nav-followers").html('<%= escape_javascript(render partial: 'users/no_users', locals: { relationship: "followers" }) %>');
+  <% end %>
+} else {
+  $("#nav-following-tab p").html('<%= escape_javascript("#{current_user.following.count}") %>');
+  $("#nav-following").html('<%= escape_javascript(render(partial: 'users/user', collection: current_user.following, as: :user)) %>');
+  $("#nav-followers #follow_form_<%= @user.id %>").html("<%= escape_javascript(render 'follow_relationships/follow', user: @user) %>");
+  <% if !current_user.following.any? %>
+    $("#nav-following").html('<%= escape_javascript(render partial: 'users/no_users', locals: { relationship: "following" }) %>');
+  <% end %>
+}

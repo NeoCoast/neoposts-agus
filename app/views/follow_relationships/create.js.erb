@@ -1,4 +1,12 @@
-$("#follow_form").html('<%= escape_javascript(render("follow_relationships/unfollow")) %>');
-$("#nav-followers-tab p").html('<%= escape_javascript("#{@user.followers.count}") %>');
+$("#follow_form_<%= @user.id %>").html('<%= escape_javascript(render "follow_relationships/unfollow", user: @user) %>');
 $("#following.p").html('<%= escape_javascript("Following: #{current_user.following.count}") %>');
-$("#nav-followers").html('<%= escape_javascript(render(partial: 'users/user', collection: @user.followers, as: :user)) %>');
+
+var userProfilePath = "<%= "/#{@user.nickname}" %>";
+if (window.location.pathname === userProfilePath) {
+  $("#nav-followers-tab p").html('<%= escape_javascript("#{@user.followers.count}") %>');
+  $("#nav-followers-tab #followers-count").html('<%= @user.followers.count == 1 ? "Follower" : "Followers" %>');
+  $("#nav-followers").html('<%= escape_javascript(render(partial: 'users/user', collection: @user.followers, as: :user)) %>');
+} else {
+  $("#nav-following-tab p").html('<%= escape_javascript("#{current_user.following.count}") %>');
+  $("#nav-following").html('<%= escape_javascript(render(partial: 'users/user', collection: current_user.following, as: :user)) %>');
+}

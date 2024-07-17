@@ -1,5 +1,5 @@
 <% if @posts.any? %>
   $(".posts").html('<%= escape_javascript(render partial: 'post', collection: @posts, as: :post) %>');
 <% else %>
-  $(".posts").html('<%= escape_javascript(render 'no_posts') %>');
+  $(".posts").html('<%= escape_javascript(render 'layouts/no_matches') %>');
 <% end %>

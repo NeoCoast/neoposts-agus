@@ -1,6 +1,6 @@
-- unless @user == current_user
-  #follow_form
-    - if current_user.following?(@user)
-      = render 'follow_relationships/unfollow'
+- unless user.id == current_user.id
+  .follow_form{ id: "follow_form_#{user.id}" }
+    - if current_user.following?(user)
+      = render 'follow_relationships/unfollow', user: user
     - else
-      = render 'follow_relationships/follow'
+      = render 'follow_relationships/follow', user: user
